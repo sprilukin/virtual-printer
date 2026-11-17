@@ -61,7 +61,11 @@ def cmd_scrub(a, root: Path) -> int:
 
 def cmd_validate(a, root: Path) -> int:
     rc = 0
-    names = a.profiles or sorted(p.name for p in (root / "profiles").iterdir() if p.is_dir())
+    names = a.profiles or sorted(
+        p.name
+        for p in (root / "profiles").iterdir()
+        if p.is_dir() and ((p / "printer.json").exists() or (p / "overlay.json").exists())
+    )
     for n in names:
         try:
             p = prof.load(n, root / "profiles")

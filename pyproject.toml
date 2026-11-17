@@ -9,10 +9,16 @@ description = "Configurable virtual IPP printer for developing and testing IPP p
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
+authors = [{ name = "Sergii Prylukin" }]
 dependencies = ["zeroconf>=0.130", "cryptography>=42"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-cov", "ruff>=0.8", "mypy>=1.13", "pre-commit>=3.8", "vulture>=2.13"]
+dev = ["pytest>=8", "pytest-cov", "ruff>=0.8", "mypy>=1.13", "pre-commit>=3.8", "vulture>=2.13", "pip-audit"]
+
+[project.urls]
+Homepage = "https://github.com/sprilukin/virtual-printer"
+Repository = "https://github.com/sprilukin/virtual-printer"
+Issues = "https://github.com/sprilukin/virtual-printer/issues"
 
 [project.scripts]
 vp = "vp.cli:main"

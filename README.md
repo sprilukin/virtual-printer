@@ -84,9 +84,9 @@ Profiles live in `profiles/<name>/` as a `printer.json` (a full capture) or an `
 
 `pre-commit` runs the same checks and CI runs them on every push.
 
-## Contributing profiles
+## Contributing
 
-Profile contributions are welcome. Only submit output of `vp scrub`, read it once first, and never attach raw captures: they contain your printer's real address, serial and MAC.
+Contributions are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). For profiles: only submit output of `vp scrub`, read it once first, and never attach raw captures, as they contain your printer's real address, serial and MAC.
 
 ## License
 
