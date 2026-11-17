@@ -13,4 +13,5 @@ jobs:
       - run: ruff format --check .
       - run: mypy
       - run: vulture
+      - run: pip-audit --skip-editable
       - run: pytest --cov

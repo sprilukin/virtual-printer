@@ -15,7 +15,7 @@ CI runs these on every push; run them before opening a PR:
 ```bash
 .venv/bin/pytest
 .venv/bin/ruff check . && .venv/bin/ruff format --check . && .venv/bin/mypy && .venv/bin/vulture
-.venv/bin/pip-audit
+.venv/bin/pip-audit --skip-editable
 ```
 
 ## Pull requests
