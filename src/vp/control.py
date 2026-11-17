@@ -16,6 +16,7 @@ import asyncio
 import json
 import re
 from http import HTTPStatus
+from typing import Any
 
 from . import faults, jobs
 from .server import Printer
@@ -34,7 +35,7 @@ class ControlServer:
         self.printer = printer
         self.host, self.port = host, port
         self._server: asyncio.AbstractServer | None = None
-        self._connections: set[asyncio.Task] = set()
+        self._connections: set[asyncio.Task[Any]] = set()
 
     @property
     def listening(self) -> bool:
@@ -133,7 +134,7 @@ class ControlServer:
             raise NotFoundError(f"job {job_id} has no page {int(page)}")
         return 200, "image/png", png.read_bytes()
 
-    def _fault(self, req: object) -> dict:
+    def _fault(self, req: object) -> dict[str, Any]:
         if not isinstance(req, dict) or set(req) - {"type", "params", "enabled"}:
             raise faults.FaultError("body is {type, params?, enabled?}")
         ftype = req.get("type")
@@ -145,7 +146,7 @@ class ControlServer:
             self.printer.set_fault(ftype, req.get("params"))
         return {"faults": self.printer.faults.to_json()}
 
-    def state(self) -> dict:
+    def state(self) -> dict[str, Any]:
         p = self.printer
         counts: dict[str, int] = {}
         for j in p.store.jobs.values():
@@ -167,7 +168,7 @@ class ControlServer:
         }
 
     @staticmethod
-    def job_json(job: jobs.Job, with_receipt: bool = False) -> dict:
+    def job_json(job: jobs.Job, with_receipt: bool = False) -> dict[str, Any]:
         out = {
             "id": job.id,
             "name": job.name,

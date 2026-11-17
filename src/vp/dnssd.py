@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import time
+from typing import Any
 
 SERVICE_TYPES = ("_ipp._tcp.local.", "_ipps._tcp.local.")
 
@@ -34,7 +35,7 @@ def _split_unescaped(line: str) -> list[str]:
     return tokens
 
 
-def parse_dnssd_text(text: str) -> dict:
+def parse_dnssd_text(text: str) -> dict[str, Any]:
     """Parse the output of `dns-sd -L "<name>" _ipp._tcp local`."""
     service_name = host = None
     port = None
@@ -59,20 +60,20 @@ def parse_dnssd_text(text: str) -> dict:
     }
 
 
-def browse_txt(host: str, ip: str | None, timeout: float = 5.0) -> dict | None:
+def browse_txt(host: str, ip: str | None, timeout: float = 5.0) -> dict[str, Any] | None:
     """Find the _ipp._tcp service for `host` via mDNS and return its TXT record."""
     from zeroconf import ServiceBrowser, ServiceListener, Zeroconf
 
     found: list[tuple[str, str]] = []
 
     class Listener(ServiceListener):
-        def add_service(self, zc, type_, name):
+        def add_service(self, zc: Any, type_: str, name: str) -> None:
             found.append((type_, name))
 
-        def update_service(self, zc, type_, name):
+        def update_service(self, zc: Any, type_: str, name: str) -> None:
             pass
 
-        def remove_service(self, zc, type_, name):
+        def remove_service(self, zc: Any, type_: str, name: str) -> None:
             pass
 
     zc = Zeroconf()

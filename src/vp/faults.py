@@ -61,7 +61,7 @@ class FaultError(ValueError):
     pass
 
 
-def validate(ftype: object, params: object = None) -> tuple[str, dict]:
+def validate(ftype: object, params: object = None) -> tuple[str, dict[str, Any]]:
     """Check a fault request; return (type, params with defaults applied)."""
     if not isinstance(ftype, str) or ftype not in SPECS:
         raise FaultError(f"unknown fault type {ftype!r}; known: {', '.join(sorted(SPECS))}")
@@ -105,9 +105,9 @@ def validate_list(items: object) -> None:
 
 
 class FaultSet:
-    def __init__(self, startup: list[dict] | None = None):
+    def __init__(self, startup: list[dict[str, Any]] | None = None):
         self.startup = copy.deepcopy(startup or [])
-        self.active: dict[str, dict] = {}
+        self.active: dict[str, dict[str, Any]] = {}
         self.reset()
 
     def reset(self) -> None:
@@ -115,7 +115,7 @@ class FaultSet:
         for it in self.startup:
             self.set(it["type"], it.get("params"))
 
-    def set(self, ftype: object, params: object = None) -> dict:
+    def set(self, ftype: object, params: object = None) -> dict[str, Any]:
         t, p = validate(ftype, params)
         self.active[t] = p
         return p
@@ -123,10 +123,10 @@ class FaultSet:
     def clear(self, ftype: str) -> bool:
         return self.active.pop(ftype, None) is not None
 
-    def get(self, ftype: str) -> dict | None:
+    def get(self, ftype: str) -> dict[str, Any] | None:
         return self.active.get(ftype)
 
-    def fire(self, ftype: str) -> dict | None:
+    def fire(self, ftype: str) -> dict[str, Any] | None:
         """Use the fault once: returns its params (and counts it down), or None if inactive."""
         p = self.active.get(ftype)
         if p is None:
@@ -143,11 +143,11 @@ class FaultSet:
             for t in sorted(STATE_REASON_FAULTS & set(self.active))
         ]
 
-    def blocking(self) -> dict | None:
+    def blocking(self) -> dict[str, Any] | None:
         """The first printer fault that stops processing, if any."""
         for t in sorted(STATE_REASON_FAULTS & set(self.active)):
             return self.active[t]
         return None
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, Any]:
         return copy.deepcopy(self.active)

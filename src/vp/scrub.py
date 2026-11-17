@@ -18,7 +18,9 @@ import hashlib
 import json
 import re
 import uuid
+from collections.abc import Iterator
 from dataclasses import dataclass, field
+from typing import Any
 
 VIRTUAL_PREFIX = "[VIRTUAL] "
 # Model-style names (printer-make-and-model, TXT ty/product) read better without brackets, but must still say "Virtual".
@@ -133,7 +135,7 @@ class _Substituter:
         self.rx = re.compile("|".join(re.escape(t) for t in texts), re.I) if texts else None
         self.count = 0
 
-    def _repl(self, m: re.Match) -> str:
+    def _repl(self, m: re.Match[str]) -> str:
         self.count += 1
         text = m.group(0)
         kind = self.kind_of[text.lower()]
@@ -148,7 +150,7 @@ class _Substituter:
     def string(self, s: str) -> str:
         return self.rx.sub(self._repl, s) if self.rx else s
 
-    def value(self, v):
+    def value(self, v: Any) -> Any:
         if isinstance(v, str):
             return self.string(v)
         if isinstance(v, dict):
@@ -158,23 +160,23 @@ class _Substituter:
                 return {"lang": v["lang"], "value": self.string(v["value"])}
         return v
 
-    def attr(self, a: dict) -> dict:
+    def attr(self, a: dict[str, Any]) -> dict[str, Any]:
         return {**a, "values": [self.value(v) for v in a["values"]]}
 
 
-def _model_of(canonical: dict) -> str:
+def _model_of(canonical: dict[str, Any]) -> str:
     for a in canonical["attributes"]:
         if a["name"] == "printer-make-and-model" and a["values"]:
             v = a["values"][0]
-            return v["value"] if isinstance(v, dict) else v
+            return str(v["value"] if isinstance(v, dict) else v)
     return "Printer"
 
 
-def _text_like(tag: str, text: str):
+def _text_like(tag: str, text: str) -> Any:
     return {"lang": "en", "value": text} if tag.endswith("WithLanguage") else text
 
 
-def scrub(canonical: dict, name: str, ids: Identifiers) -> dict:
+def scrub(canonical: dict[str, Any], name: str, ids: Identifiers) -> dict[str, Any]:
     """Return the scrubbed profile document. Raises LeakError on any survivor."""
     fakes = Fakes(name)
     model = _model_of(canonical)
@@ -238,7 +240,7 @@ def scrub(canonical: dict, name: str, ids: Identifiers) -> dict:
 # ---------------------------------------------------------------- leak check
 
 
-def _walk(node, path: str):
+def _walk(node: Any, path: str) -> Iterator[tuple[str, str]]:
     """Yield (path, text) for every string reachable, plus decoded blobs."""
     if isinstance(node, str):
         yield path, node
@@ -257,7 +259,7 @@ def _walk(node, path: str):
             yield from _walk(v, f"{path}[{i}]")
 
 
-def check_leaks(doc: dict, ids: Identifiers) -> None:
+def check_leaks(doc: dict[str, Any], ids: Identifiers) -> None:
     """Fail if any identifier appears anywhere in `doc` (exact match, any case)."""
     variants = ids.variants()
     hits = []

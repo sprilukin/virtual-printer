@@ -18,6 +18,7 @@ import ssl
 import time
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 from . import faults, ipp, jobs
 from .validate import Validator
@@ -57,7 +58,7 @@ class HttpError(Exception):
         self.status = status
 
 
-def _op_attrs(*extra: dict) -> dict:
+def _op_attrs(*extra: dict[str, Any]) -> dict[str, Any]:
     return {
         "tag": "operation-attributes",
         "attributes": [
@@ -68,7 +69,7 @@ def _op_attrs(*extra: dict) -> dict:
     }
 
 
-def _date_time(ts: float) -> dict:
+def _date_time(ts: float) -> dict[str, Any]:
     d = datetime.fromtimestamp(ts, UTC)
     raw = (
         d.year.to_bytes(2, "big")
@@ -81,7 +82,7 @@ def _date_time(ts: float) -> dict:
 class Printer:
     def __init__(
         self,
-        profile: dict,
+        profile: dict[str, Any],
         spool: Path,
         host: str = "127.0.0.1",
         port: int = 0,
@@ -90,7 +91,7 @@ class Printer:
         self.profile = profile
         self.ssl_context = ssl_context
         self.scheme = "ipps" if ssl_context else "ipp"
-        self.auth: dict | None = profile.get("options", {}).get("auth")
+        self.auth: dict[str, Any] | None = profile.get("options", {}).get("auth")
         self.auth_failures = 0
         self.name = profile["name"]
         self.host, self.port = host, port
@@ -101,9 +102,9 @@ class Printer:
         self.accepting = True
         self.state_reasons = ["none"]
         self.faults = faults.FaultSet(profile.get("options", {}).get("faults"))
-        self.connections: set[asyncio.Task] = set()
+        self.connections: set[asyncio.Task[Any]] = set()
         self._wake = asyncio.Event()  # set when faults change or a job is cancelled
-        self.tasks: set[asyncio.Task] = set()
+        self.tasks: set[asyncio.Task[Any]] = set()
         self._server: asyncio.AbstractServer | None = None
         txt = dict(profile.get("dnssd", {}).get("txt", []))
         self.resource = "/" + txt.get("rp", "ipp/print").strip("/")
@@ -133,7 +134,7 @@ class Printer:
         for t in list(self.tasks):
             await asyncio.gather(t, return_exceptions=True)
 
-    def set_fault(self, ftype: object, params: object = None) -> dict:
+    def set_fault(self, ftype: object, params: object = None) -> dict[str, Any]:
         p = self.faults.set(ftype, params)
         self._notify()
         return p
@@ -371,7 +372,7 @@ class Printer:
             return self._response(major, minor, 0x0501, rid)
         try:
             handler = getattr(self, "op_" + op.lower().replace("-", "_"))
-            return await handler(req, bytes(document), host, major, minor)
+            return bytes(await handler(req, bytes(document), host, major, minor))
         except Exception as exc:  # a bug must not kill the connection
             return self._response(
                 major, minor, 0x0500, rid, status_message=f"{type(exc).__name__}: {exc}"
@@ -383,9 +384,9 @@ class Printer:
         minor: int,
         code: int,
         rid: int,
-        *groups: dict,
+        *groups: dict[str, Any],
         status_message: str | None = None,
-        unsupported: list[dict] | None = None,
+        unsupported: list[dict[str, Any]] | None = None,
     ) -> bytes:
         extra = (
             [ipp.attr("status-message", "textWithoutLanguage", status_message)]
@@ -400,7 +401,7 @@ class Printer:
         )
 
     @staticmethod
-    def _op(req: dict, name: str) -> object | None:
+    def _op(req: dict[str, Any], name: str) -> object | None:
         a = ipp.find_attr(req, name, "operation-attributes")
         return a["values"][0] if a and a["values"] else None
 
@@ -421,7 +422,7 @@ class Printer:
                         hosts.add(v.split("://", 1)[1].split("/", 1)[0])
         return hosts
 
-    def _rewrite_uris(self, a: dict, host: str) -> dict:
+    def _rewrite_uris(self, a: dict[str, Any], host: str) -> dict[str, Any]:
         if a["name"] == "printer-uri-supported":
             return ipp.attr(a["name"], "uri", f"{self.scheme}://{host}{self.resource}")
         if a["name"] == "uri-security-supported":
@@ -436,7 +437,7 @@ class Printer:
                 a["values"][i] = v
         return a
 
-    def printer_attributes(self, host: str) -> list[dict]:
+    def printer_attributes(self, host: str) -> list[dict[str, Any]]:
         now = time.time()
         dynamic = {
             "printer-state": ipp.attr("printer-state", "enum", self.printer_state),
@@ -468,7 +469,9 @@ class Printer:
                 return "job-template"
         return "printer-description"
 
-    async def op_get_printer_attributes(self, req, document, host, major, minor) -> bytes:
+    async def op_get_printer_attributes(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         req_attr = ipp.find_attr(req, "requested-attributes", "operation-attributes")
         wanted = set(req_attr["values"]) if req_attr else {"all"}
         have = self.printer_attributes(host)
@@ -494,12 +497,14 @@ class Printer:
             unsupported=missing or None,
         )
 
-    async def op_identify_printer(self, req, document, host, major, minor) -> bytes:
+    async def op_identify_printer(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         return self._response(major, minor, 0x0000, req["request_id"])
 
     # -- jobs
 
-    def _job_group(self, job: jobs.Job, host: str, full: bool = True) -> dict:
+    def _job_group(self, job: jobs.Job, host: str, full: bool = True) -> dict[str, Any]:
         base = f"{self.scheme}://{host}{self.resource}"
         a = [
             ipp.attr("job-id", "integer", job.id),
@@ -527,9 +532,9 @@ class Printer:
             ]
         return {"tag": "job-attributes", "attributes": a}
 
-    def _new_job(self, req: dict, operation: str) -> jobs.Job:
+    def _new_job(self, req: dict[str, Any], operation: str) -> jobs.Job:
         fmt = self._op(req, "document-format")
-        job_attrs: list[dict] = next(
+        job_attrs: list[dict[str, Any]] = next(
             (g["attributes"] for g in req["groups"] if g["tag"] == "job-attributes"), []
         )
         return self.store.create(
@@ -541,7 +546,7 @@ class Printer:
             compression=str(self._op(req, "compression") or "none"),
         )
 
-    def _gate(self, req: dict, major: int, minor: int):
+    def _gate(self, req: dict[str, Any], major: int, minor: int) -> tuple[bytes | None, Any]:
         """Common Print-Job/Validate-Job/Create-Job checks. Returns (response|None, outcome)."""
         outcome = self.validator.validate(req)
         if not self.accepting:
@@ -557,20 +562,24 @@ class Printer:
             ), outcome
         return None, outcome
 
-    async def op_validate_job(self, req, document, host, major, minor) -> bytes:
+    async def op_validate_job(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         early, outcome = self._gate(req, major, minor)
         return early or self._response(
             major, minor, outcome.code, req["request_id"], unsupported=outcome.unsupported or None
         )
 
-    def _busy(self, req: dict, major: int, minor: int) -> bytes | None:
+    def _busy(self, req: dict[str, Any], major: int, minor: int) -> bytes | None:
         if self.faults.fire(faults.BUSY) is None:
             return None
         return self._response(
             major, minor, 0x0507, req["request_id"], status_message="printer busy"
         )
 
-    async def op_print_job(self, req, document, host, major, minor) -> bytes:
+    async def op_print_job(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         if busy := self._busy(req, major, minor):
             return busy
         early, outcome = self._gate(req, major, minor)
@@ -588,7 +597,9 @@ class Printer:
             unsupported=outcome.unsupported or None,
         )
 
-    async def op_create_job(self, req, document, host, major, minor) -> bytes:
+    async def op_create_job(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         if busy := self._busy(req, major, minor):
             return busy
         early, outcome = self._gate(req, major, minor)
@@ -607,14 +618,16 @@ class Printer:
             unsupported=outcome.unsupported or None,
         )
 
-    def _job_from(self, req: dict) -> jobs.Job | None:
+    def _job_from(self, req: dict[str, Any]) -> jobs.Job | None:
         jid = self._op(req, "job-id")
         if jid is None:
             uri = str(self._op(req, "job-uri") or "")
             jid = int(uri.rsplit("/", 1)[-1]) if uri.rsplit("/", 1)[-1].isdigit() else None
         return self.store.get(jid) if isinstance(jid, int) else None
 
-    async def op_send_document(self, req, document, host, major, minor) -> bytes:
+    async def op_send_document(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         if busy := self._busy(req, major, minor):
             return busy
         job = self._job_from(req)
@@ -632,7 +645,9 @@ class Printer:
             major, minor, 0x0000, req["request_id"], self._job_group(job, host, False)
         )
 
-    async def op_cancel_job(self, req, document, host, major, minor) -> bytes:
+    async def op_cancel_job(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         job = self._job_from(req)
         if job is None:
             return self._response(major, minor, 0x0406, req["request_id"])
@@ -648,13 +663,17 @@ class Printer:
             )
         return self._response(major, minor, 0x0000, req["request_id"])
 
-    async def op_get_job_attributes(self, req, document, host, major, minor) -> bytes:
+    async def op_get_job_attributes(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         job = self._job_from(req)
         if job is None:
             return self._response(major, minor, 0x0406, req["request_id"])
         return self._response(major, minor, 0x0000, req["request_id"], self._job_group(job, host))
 
-    async def op_get_jobs(self, req, document, host, major, minor) -> bytes:
+    async def op_get_jobs(
+        self, req: dict[str, Any], document: bytes, host: str, major: int, minor: int
+    ) -> bytes:
         which = self._op(req, "which-jobs") or "not-completed"
         limit = self._op(req, "limit")
         sel = [j for j in self.store.jobs.values() if j.finished_state == (which == "completed")]

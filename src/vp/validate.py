@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass, field
+from typing import Any
 
 from . import ipp
 
@@ -43,14 +44,14 @@ OPERATION_CHECKED = {"document-format", "compression"}
 @dataclass
 class Outcome:
     code: int = OK
-    unsupported: list[dict] = field(default_factory=list)
+    unsupported: list[dict[str, Any]] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
 
     @property
     def accepted(self) -> bool:
         return self.code < 0x0400
 
-    def to_json(self) -> dict:
+    def to_json(self) -> dict[str, Any]:
         return {
             "status": ipp.status_name(self.code),
             "accepted": self.accepted,
@@ -63,11 +64,11 @@ def _key(v: object) -> str:
     return json.dumps(v, sort_keys=True)
 
 
-def _in_range(v: object, ranges: list[dict]) -> bool:
+def _in_range(v: object, ranges: list[dict[str, Any]]) -> bool:
     return isinstance(v, int) and any(r["lower"] <= v <= r["upper"] for r in ranges)
 
 
-def value_supported(supported: dict, value: object) -> bool:
+def value_supported(supported: dict[str, Any], value: object) -> bool:
     """Is `value` allowed by the `*-supported` attribute?"""
     tag = supported["tag"]
     if tag == "rangeOfInteger":
@@ -83,14 +84,14 @@ def value_supported(supported: dict, value: object) -> bool:
 
 
 class Validator:
-    def __init__(self, profile: dict):
+    def __init__(self, profile: dict[str, Any]):
         self.attrs = {a["name"]: a for a in profile["attributes"]}
         self.mode = profile.get("options", {}).get("validation", "strict")
 
-    def supported(self, name: str) -> dict | None:
+    def supported(self, name: str) -> dict[str, Any] | None:
         return self.attrs.get(f"{name}-supported")
 
-    def _check_media_size(self, size: dict) -> bool:
+    def _check_media_size(self, size: dict[str, Any]) -> bool:
         db = self.attrs.get("media-size-supported")
         if db is None:
             return True
@@ -111,7 +112,7 @@ class Validator:
                 return True
         return False
 
-    def _check_media_col(self, col: dict) -> bool:
+    def _check_media_col(self, col: dict[str, Any]) -> bool:
         member_names = self.attrs.get("media-col-supported")
         for m in col["members"]:
             n, vals = m["name"], m["values"]
@@ -126,7 +127,7 @@ class Validator:
                 return False
         return True
 
-    def _check_attr(self, a: dict) -> bool:
+    def _check_attr(self, a: dict[str, Any]) -> bool:
         name = a["name"]
         if a["tag"] in ipp.OUT_OF_BAND.values():
             return True
@@ -140,7 +141,7 @@ class Validator:
             return name in jcas["values"]
         return True
 
-    def validate(self, request: dict) -> Outcome:
+    def validate(self, request: dict[str, Any]) -> Outcome:
         out = Outcome()
         bad_format = False
         for g in request["groups"]:
@@ -171,5 +172,5 @@ class Validator:
         return out
 
 
-def _describe(a: dict) -> str:
+def _describe(a: dict[str, Any]) -> str:
     return ",".join(_key(v).strip('"') for v in a["values"])

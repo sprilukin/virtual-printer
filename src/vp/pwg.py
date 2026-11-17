@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import struct
 from dataclasses import dataclass
+from typing import Any
 
 SYNC = b"RaS2"
 HEADER_SIZE = 1796
@@ -57,10 +58,10 @@ def _cstr(b: bytes) -> str:
 
 
 def _u32(h: bytes, off: int) -> int:
-    return struct.unpack_from(">I", h, off)[0]
+    return int(struct.unpack_from(">I", h, off)[0])
 
 
-def parse_header(h: bytes) -> dict:
+def parse_header(h: bytes) -> dict[str, Any]:
     if len(h) != HEADER_SIZE:
         raise RasterError("truncated page header")
     if _cstr(h[:64]) != "PwgRaster":

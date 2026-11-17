@@ -21,7 +21,7 @@ from __future__ import annotations
 import base64
 import http.client
 import struct
-from typing import Any
+from typing import Any, cast
 from urllib.parse import urlsplit
 
 GROUP_TAGS = {
@@ -143,7 +143,7 @@ class _Reader:
         return self.take(1)[0]
 
     def u16(self) -> int:
-        return struct.unpack(">H", self.take(2))[0]
+        return int(struct.unpack(">H", self.take(2))[0])
 
     def peek(self) -> int:
         if self.pos >= len(self.data):
@@ -184,10 +184,10 @@ def _decode_value(tag: int, raw: bytes) -> object:
     return {"hex": raw.hex()}
 
 
-def _read_collection(r: _Reader) -> dict:
+def _read_collection(r: _Reader) -> dict[str, Any]:
     """Read members after a begCollection value, up to endCollection."""
-    members: list[dict] = []
-    current: dict | None = None
+    members: list[dict[str, Any]] = []
+    current: dict[str, Any] | None = None
     while True:
         tag = r.u8()
         name_len = r.u16()
@@ -208,7 +208,7 @@ def _read_collection(r: _Reader) -> dict:
         _add_value(current, tag, value)
 
 
-def _add_value(attr: dict, tag: int, value: object) -> None:
+def _add_value(attr: dict[str, Any], tag: int, value: object) -> None:
     tag_name = VALUE_TAGS.get(tag)
     if tag_name is None:
         raise IppError(f"unknown value tag 0x{tag:02x}")
@@ -221,7 +221,7 @@ def _add_value(attr: dict, tag: int, value: object) -> None:
         attr["values"].append(value)
 
 
-def decode(data: bytes) -> dict:
+def decode(data: bytes) -> dict[str, Any]:
     """Decode an IPP message (request or response) into the canonical tree.
 
     Trailing document data, if any, is kept hex-encoded under "data_hex".
@@ -232,20 +232,20 @@ def decode(data: bytes) -> dict:
     return msg
 
 
-def decode_message(data: bytes) -> tuple[dict, memoryview]:
+def decode_message(data: bytes) -> tuple[dict[str, Any], memoryview]:
     """Decode an IPP message, returning (tree, trailing document bytes)."""
     r = _Reader(data)
     major, minor = r.u8(), r.u8()
     code = r.u16()
     request_id = struct.unpack(">I", r.take(4))[0]
-    msg: dict = {
+    msg: dict[str, Any] = {
         "version": f"{major}.{minor}",
         "code": code,
         "request_id": request_id,
         "groups": [],
     }
-    group: dict | None = None
-    current: dict | None = None
+    group: dict[str, Any] | None = None
+    current: dict[str, Any] | None = None
     while True:
         tag = r.u8()
         if tag == END_TAG:
@@ -292,15 +292,15 @@ def _encode_value(tag_name: str, value: object) -> bytes:
     if tag in STRING_TAGS:
         return str(value).encode("utf-8", errors="surrogateescape")
     if tag in (0x35, 0x36):
-        lang = value["lang"].encode("utf-8")  # type: ignore[index]
-        text = value["value"].encode("utf-8")  # type: ignore[index]
+        lang: bytes = value["lang"].encode("utf-8")  # type: ignore[index]
+        text: bytes = value["value"].encode("utf-8")  # type: ignore[index]
         return struct.pack(">H", len(lang)) + lang + struct.pack(">H", len(text)) + text
     if tag == 0x30:
         return base64.b64decode(value["base64"])  # type: ignore[index]
     return bytes.fromhex(value["hex"])  # type: ignore[index]
 
 
-def _enc_attr_values(attr: dict, out: bytearray, named: bool) -> None:
+def _enc_attr_values(attr: dict[str, Any], out: bytearray, named: bool) -> None:
     """Emit all values of one attribute. `named`: top level (name on first
     value) versus collection member (name length 0, MEMBER_NAME precedes)."""
     tag_name = attr["tag"]
@@ -321,7 +321,7 @@ def _enc_attr_values(attr: dict, out: bytearray, named: bool) -> None:
             out += struct.pack(">H", len(raw)) + raw
 
 
-def encode(msg: dict, data: bytes = b"") -> bytes:
+def encode(msg: dict[str, Any], data: bytes = b"") -> bytes:
     major, minor = (int(p) for p in msg["version"].split("."))
     out = bytearray([major, minor])
     out += struct.pack(">HI", msg["code"], msg["request_id"])
@@ -337,11 +337,11 @@ def encode(msg: dict, data: bytes = b"") -> bytes:
 # ---------------------------------------------------------------- helpers
 
 
-def attr(name: str, tag: str, *values: object) -> dict:
+def attr(name: str, tag: str, *values: object) -> dict[str, Any]:
     return {"name": name, "tag": tag, "values": list(values)}
 
 
-def resolution(dpi: int) -> dict:
+def resolution(dpi: int) -> dict[str, Any]:
     return {"x": dpi, "y": dpi, "units": "dpi"}
 
 
@@ -349,23 +349,23 @@ def status_name(code: int) -> str:
     return STATUS_NAMES.get(code, f"0x{code:04x}")
 
 
-def find_attr(msg: dict, name: str, group: str | None = None) -> dict | None:
+def find_attr(msg: dict[str, Any], name: str, group: str | None = None) -> dict[str, Any] | None:
     for g in msg["groups"]:
         if group and g["tag"] != group:
             continue
         for a in g["attributes"]:
             if a["name"] == name:
-                return a
+                return cast("dict[str, Any]", a)
     return None
 
 
 def make_request(
     operation: str,
     printer_uri: str,
-    extra_groups: list[dict] | None = None,
+    extra_groups: list[dict[str, Any]] | None = None,
     request_id: int = 1,
     requesting_user: str = "virtual-printer",
-) -> dict:
+) -> dict[str, Any]:
     ops = [
         attr("attributes-charset", "charset", "utf-8"),
         attr("attributes-natural-language", "naturalLanguage", "en"),

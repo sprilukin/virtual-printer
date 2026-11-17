@@ -18,6 +18,7 @@ import datetime as dt
 import ipaddress
 import ssl
 from pathlib import Path
+from typing import Any
 
 from cryptography import x509
 from cryptography.hazmat.primitives import hashes, serialization
@@ -184,7 +185,7 @@ def server_context(cert: Path, key: Path) -> ssl.SSLContext:
 
 
 def context_for(
-    profile: dict, tls_dir: Path, root: Path, extra_sans: list[str] | tuple[str, ...] = ()
+    profile: dict[str, Any], tls_dir: Path, root: Path, extra_sans: list[str] | tuple[str, ...] = ()
 ) -> ssl.SSLContext | None:
     """The server SSL context a profile asks for (`options.tls`), or None for plain ipp://."""
     spec = profile.get("options", {}).get("tls")

@@ -7,6 +7,7 @@ import json
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 from . import png, pwg
 
@@ -32,7 +33,7 @@ RASTER_FORMATS = {"image/pwg-raster", "application/octet-stream"}
 SIDES = ("top", "bottom", "left", "right")
 
 
-def to_plain(a: dict) -> object:
+def to_plain(a: dict[str, Any]) -> object:
     """Attribute tree to plain JSON: one value stays scalar, collections become dicts."""
     vals = [
         {m["name"]: to_plain(m) for m in v["members"]} if a["tag"] == "collection" else v
@@ -47,21 +48,21 @@ class Job:
     name: str
     user: str
     operation: str
-    attributes: list[dict]  # job-template attributes as received
+    attributes: list[dict[str, Any]]  # job-template attributes as received
     created: float = field(default_factory=time.time)
     state: int = PENDING
     reasons: list[str] = field(default_factory=lambda: ["none"])
     document_format: str = "application/octet-stream"
     compression: str = "none"
-    validation: dict = field(default_factory=dict)
+    validation: dict[str, Any] = field(default_factory=dict)
     dir: Path | None = None
-    receipt: dict | None = None
+    receipt: dict[str, Any] | None = None
     pages_completed: int = 0
     started: float | None = None
     finished: float | None = None
     canceled: bool = False
 
-    def attr(self, name: str) -> dict | None:
+    def attr(self, name: str) -> dict[str, Any] | None:
         return next((a for a in self.attributes if a["name"] == name), None)
 
     @property
@@ -75,7 +76,7 @@ class JobStore:
         self.jobs: dict[int, Job] = {}
         self._next = 1
 
-    def create(self, **kw) -> Job:
+    def create(self, **kw: Any) -> Job:
         job = Job(id=self._next, **kw)
         self._next += 1
         job.dir = self.spool / f"job-{job.id:04d}"
@@ -94,12 +95,12 @@ class JobStore:
 # ---------------------------------------------------------------- margins
 
 
-def effective_margins(job: Job, profile: dict) -> dict[str, int]:
+def effective_margins(job: Job, profile: dict[str, Any]) -> dict[str, int]:
     """Unprintable margins in 1/100 mm: the job's media-col, else the profile default."""
     attrs = {a["name"]: a for a in profile["attributes"]}
     found: dict[str, int] = {}
 
-    def from_col(col: dict) -> None:
+    def from_col(col: dict[str, Any]) -> None:
         for m in col["members"]:
             for s in SIDES:
                 if m["name"] == f"media-{s}-margin" and m["values"]:
@@ -122,7 +123,7 @@ def _px(hundredths_mm: int, dpi: int) -> int:
 # ---------------------------------------------------------------- processing
 
 
-def _media_of(job: Job, profile: dict) -> dict:
+def _media_of(job: Job, profile: dict[str, Any]) -> dict[str, Any]:
     attrs = {a["name"]: a for a in profile["attributes"]}
     media = job.attr("media")
     col = job.attr("media-col") or attrs.get("media-col-default")
@@ -155,7 +156,7 @@ def _decode_document(job: Job, data: bytes) -> tuple[bytes, list[pwg.Page] | Non
     return data, None, f"document format {job.document_format} is stored but not decoded"
 
 
-def process(job: Job, profile: dict, data: bytes) -> dict:
+def process(job: Job, profile: dict[str, Any], data: bytes) -> dict[str, Any]:
     """Decode the document, write raster + PNGs + receipt, set final job state."""
     job.state, job.started = PROCESSING, time.time()
     assert job.dir is not None
@@ -166,7 +167,7 @@ def process(job: Job, profile: dict, data: bytes) -> dict:
     attrs = {a["name"]: a for a in profile["attributes"]}
     strict = profile.get("options", {}).get("validation", "strict") == "strict"
     warnings: list[str] = []
-    page_info: list[dict] = []
+    page_info: list[dict[str, Any]] = []
     margins = effective_margins(job, profile)
     for i, page in enumerate(pages or [], start=1):
         dpi = page.resolution[0] or 1

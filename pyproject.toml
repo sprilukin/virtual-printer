@@ -73,7 +73,7 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 no_implicit_optional = true
 check_untyped_defs = true
-# TODO: tighten to `strict = true` once ~115 bare generics / missing annotations are fixed
+strict = true
 
 [[tool.mypy.overrides]]
 module = "zeroconf.*"

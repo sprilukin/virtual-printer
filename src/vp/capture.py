@@ -10,6 +10,7 @@ import datetime as dt
 import json
 import socket
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlsplit
 
 from . import dnssd, ipp
@@ -21,7 +22,7 @@ META = "capture.json"
 CANONICAL = "canonical.json"
 
 
-def capture(uri: str, raw_dir: Path, mdns_timeout: float = 5.0) -> dict:
+def capture(uri: str, raw_dir: Path, mdns_timeout: float = 5.0) -> dict[str, Any]:
     """Capture `uri` into raw_dir. Returns the meta dict."""
     raw_dir.mkdir(parents=True, exist_ok=True)
     host = urlsplit(uri).hostname or ""
@@ -70,7 +71,7 @@ def capture(uri: str, raw_dir: Path, mdns_timeout: float = 5.0) -> dict:
     return meta
 
 
-def convert(raw_dir: Path) -> dict:
+def convert(raw_dir: Path) -> dict[str, Any]:
     """Raw capture directory to the canonical (unscrubbed) tree."""
     ipp_path = raw_dir / RAW_IPP
     if not ipp_path.exists():

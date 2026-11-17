@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import asyncio
 import signal
 import sys
@@ -52,7 +53,7 @@ async def serve(
             await p.stop()
 
 
-def _tls_sans(a) -> list[str]:
+def _tls_sans(a: argparse.Namespace) -> list[str]:
     """Names and addresses the server certificate must cover."""
     sans = list(a.tls_san or [])
     if a.bind not in ("0.0.0.0", "", "::"):
@@ -62,7 +63,7 @@ def _tls_sans(a) -> list[str]:
     return sans
 
 
-def run_up(a, root: Path) -> int:
+def run_up(a: argparse.Namespace, root: Path) -> int:
     spool = (a.spool or root / "spool").resolve()
     tls_dir = (a.tls_dir or root / "tls").resolve()
     printers = []

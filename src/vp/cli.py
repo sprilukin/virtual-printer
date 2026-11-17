@@ -17,7 +17,7 @@ def _raw_dir(arg: str, root: Path) -> Path:
     return p if p.exists() and p.is_dir() else root / "captures" / "raw" / arg
 
 
-def cmd_capture(a, root: Path) -> int:
+def cmd_capture(a: argparse.Namespace, root: Path) -> int:
     name = a.name or a.uri.rstrip("/").split("/")[-2]
     raw = root / "captures" / "raw" / name
     meta = cap.capture(a.uri, raw, a.mdns_timeout)
@@ -25,7 +25,7 @@ def cmd_capture(a, root: Path) -> int:
     return 0
 
 
-def cmd_convert(a, root: Path) -> int:
+def cmd_convert(a: argparse.Namespace, root: Path) -> int:
     raw = _raw_dir(a.capture, root)
     c = cap.convert(raw)
     print(
@@ -34,7 +34,7 @@ def cmd_convert(a, root: Path) -> int:
     return 0
 
 
-def cmd_scrub(a, root: Path) -> int:
+def cmd_scrub(a: argparse.Namespace, root: Path) -> int:
     raw = _raw_dir(a.capture, root)
     canonical = cap.convert(raw)
     meta = canonical.get("capture_meta", {})
@@ -59,7 +59,7 @@ def cmd_scrub(a, root: Path) -> int:
     return 0
 
 
-def cmd_validate(a, root: Path) -> int:
+def cmd_validate(a: argparse.Namespace, root: Path) -> int:
     rc = 0
     names = a.profiles or sorted(
         p.name
@@ -76,7 +76,7 @@ def cmd_validate(a, root: Path) -> int:
     return rc
 
 
-def cmd_ca(a, root: Path) -> int:
+def cmd_ca(a: argparse.Namespace, root: Path) -> int:
     from . import tls
 
     cert, _ = tls.ensure_ca((a.tls_dir or root / "tls").resolve())
@@ -84,7 +84,7 @@ def cmd_ca(a, root: Path) -> int:
     return 0
 
 
-def cmd_up(a, root: Path) -> int:
+def cmd_up(a: argparse.Namespace, root: Path) -> int:
     from .runner import run_up
 
     return run_up(a, root)
@@ -165,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     c.set_defaults(fn=cmd_up)
 
     a = ap.parse_args(argv)
-    return a.fn(a, a.root)
+    return int(a.fn(a, a.root))
 
 
 if __name__ == "__main__":

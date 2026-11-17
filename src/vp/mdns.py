@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import socket
+from typing import Any
 
-from zeroconf import ServiceInfo, get_all_addresses
+from zeroconf import ServiceInfo, get_all_addresses  # type: ignore[attr-defined]
 from zeroconf.asyncio import AsyncZeroconf
 
 
@@ -15,7 +16,9 @@ def lan_addresses(bind: str) -> list[str]:
     return [a for a in get_all_addresses() if not a.startswith(("127.", "169.254."))]
 
 
-def service_info(profile: dict, port: int, addresses: list[str], hostname: str) -> ServiceInfo:
+def service_info(
+    profile: dict[str, Any], port: int, addresses: list[str], hostname: str
+) -> ServiceInfo:
     dns = profile["dnssd"]
     type_ = dns["service_type"] + ".local."
     return ServiceInfo(
@@ -35,7 +38,9 @@ class Advertiser:
         self.azc: AsyncZeroconf | None = None
         self.infos: list[ServiceInfo] = []
 
-    async def register(self, profile: dict, port: int, addresses: list[str]) -> ServiceInfo:
+    async def register(
+        self, profile: dict[str, Any], port: int, addresses: list[str]
+    ) -> ServiceInfo:
         if self.azc is None:
             self.azc = AsyncZeroconf()
         info = service_info(profile, port, addresses, f"vp-{profile['name']}")

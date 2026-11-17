@@ -13,6 +13,7 @@ import json
 import re
 import uuid
 from pathlib import Path
+from typing import Any, cast
 
 from . import faults, ipp
 from .scrub import VIRTUAL_MODEL_PREFIX, VIRTUAL_PREFIX
@@ -44,7 +45,7 @@ class ProfileError(Exception):
     pass
 
 
-def load(name: str, profiles_dir: Path, _seen: tuple[str, ...] = ()) -> dict:
+def load(name: str, profiles_dir: Path, _seen: tuple[str, ...] = ()) -> dict[str, Any]:
     if name in _seen:
         raise ProfileError(f"overlay cycle: {' -> '.join((*_seen, name))}")
     d = profiles_dir / name
@@ -57,10 +58,10 @@ def load(name: str, profiles_dir: Path, _seen: tuple[str, ...] = ()) -> dict:
     else:
         raise ProfileError(f"no profile {name!r} in {profiles_dir}")
     validate(profile)
-    return profile
+    return cast("dict[str, Any]", profile)
 
 
-def apply_overlay(base: dict, overlay: dict, name: str) -> dict:
+def apply_overlay(base: dict[str, Any], overlay: dict[str, Any], name: str) -> dict[str, Any]:
     p = copy.deepcopy(base)
     p["name"] = name
     p["description"] = overlay.get("description", f"Overlay on {overlay['base']}")
@@ -102,7 +103,7 @@ def apply_overlay(base: dict, overlay: dict, name: str) -> dict:
     return p
 
 
-def _replace(p: dict, new: dict) -> None:
+def _replace(p: dict[str, Any], new: dict[str, Any]) -> None:
     for i, a in enumerate(p["attributes"]):
         if a["name"] == new["name"]:
             p["attributes"][i] = new
@@ -110,7 +111,7 @@ def _replace(p: dict, new: dict) -> None:
     p["attributes"].append(new)
 
 
-def _get(p: dict, name: str) -> dict | None:
+def _get(p: dict[str, Any], name: str) -> dict[str, Any] | None:
     return next((a for a in p["attributes"] if a["name"] == name), None)
 
 
@@ -123,7 +124,7 @@ def media_dimensions(name: str) -> tuple[int, int]:
     return round(float(m.group(1)) * k), round(float(m.group(2)) * k)
 
 
-def _set_default_media(p: dict, media: str) -> None:
+def _set_default_media(p: dict[str, Any], media: str) -> None:
     x, y = media_dimensions(media)
     for n in ("media-default", "media-ready"):
         _replace(p, ipp.attr(n, "keyword", media))
@@ -142,11 +143,11 @@ def _set_default_media(p: dict, media: str) -> None:
                     ]
 
 
-def _set_margins(p: dict, spec: dict) -> None:
+def _set_margins(p: dict[str, Any], spec: dict[str, Any]) -> None:
     """spec: {"default": 0, "supported": [0, 340]} in 1/100 mm."""
     sides = ("top", "bottom", "left", "right")
 
-    def walk(attrs: list[dict]) -> None:
+    def walk(attrs: list[dict[str, Any]]) -> None:
         for a in attrs:
             if a["tag"] == "collection":
                 for v in a["values"]:
@@ -161,7 +162,7 @@ def _set_margins(p: dict, spec: dict) -> None:
             _replace(p, ipp.attr(n, "integer", *spec["supported"]))
 
 
-def _validate_value(tag: str, v, where: str, errors: list[str]) -> None:
+def _validate_value(tag: str, v: Any, where: str, errors: list[str]) -> None:
     if tag in ipp.OUT_OF_BAND.values():
         errors.append(f"{where}: out-of-band tag {tag} carries a value")
     elif tag in ("integer", "enum"):
@@ -192,7 +193,7 @@ def _validate_value(tag: str, v, where: str, errors: list[str]) -> None:
         errors.append(f"{where}: {tag} expects string")
 
 
-def _validate_attr(a: dict, where: str, errors: list[str]) -> None:
+def _validate_attr(a: dict[str, Any], where: str, errors: list[str]) -> None:
     if not isinstance(a, dict) or not {"name", "tag", "values"} <= a.keys():
         errors.append(f"{where}: malformed attribute")
         return
@@ -210,11 +211,11 @@ def _validate_attr(a: dict, where: str, errors: list[str]) -> None:
             _validate_value(tag, v, f"{where}[{i}]", errors)
 
 
-def _flat(a: dict) -> list:
+def _flat(a: dict[str, Any]) -> list[Any]:
     return [json.dumps(v, sort_keys=True) for v in a["values"]]
 
 
-def _validate_security(options: dict) -> list[str]:
+def _validate_security(options: dict[str, Any]) -> list[str]:
     """`options.tls` and `options.auth`."""
     errors: list[str] = []
     if "tls" in options:
@@ -241,7 +242,7 @@ def _validate_security(options: dict) -> list[str]:
     return errors
 
 
-def validate(profile: dict) -> None:
+def validate(profile: dict[str, Any]) -> None:
     errors: list[str] = []
     if profile.get("format") != 1:
         errors.append("format must be 1")

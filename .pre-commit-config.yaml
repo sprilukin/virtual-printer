@@ -10,6 +10,7 @@ repos:
     hooks:
       - id: mypy
         files: ^src/
+        additional_dependencies: ["zeroconf>=0.130", "cryptography>=42"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
