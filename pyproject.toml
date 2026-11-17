@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "virtual-printer"
+version = "0.1.0"
+description = "Configurable virtual IPP printer for developing and testing IPP print clients"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = ["zeroconf>=0.130", "cryptography>=42"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-cov", "ruff>=0.8", "mypy>=1.13", "pre-commit>=3.8", "vulture>=2.13"]
+
+[project.scripts]
+vp = "vp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",   # pycodestyle
+    "F",        # pyflakes
+    "I",        # isort
+    "B",        # bugbear
+    "UP",       # pyupgrade
+    "SIM",      # simplify
+    "C4",       # comprehensions
+    "C90",      # complexity
+    "S",        # bandit-style security
+    "PT",       # pytest style
+    "RET", "PIE", "PERF", "RUF", "N", "A", "T20", "ASYNC", "TRY",
+]
+ignore = ["TRY003", "E501", "S101", "PT018"]  # E501: formatter owns line length
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.ruff.lint.per-file-ignores]
+"src/vp/cli.py" = ["T201"]  # CLI output
+"src/vp/runner.py" = ["T201", "S104"]
+"src/vp/capture.py" = ["T201"]
+"src/vp/mdns.py" = ["S104"]
+"tools/**" = ["T201", "N812"]
+"src/vp/server.py" = ["S104"]  # printer must bind all interfaces
+"tests/**" = ["PT011", "E741", "S105", "S106", "S311", "PLR2004", "T20"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+files = ["src"]
+warn_unreachable = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true
+# TODO: tighten to `strict = true` once ~115 bare generics / missing annotations are fixed
+
+[[tool.mypy.overrides]]
+module = "zeroconf.*"
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["src/vp"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.vulture]
+paths = ["src"]
+min_confidence = 80

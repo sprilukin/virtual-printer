@@ -1,0 +1,71 @@
+{
+  "base": "duplex-color-laser-300dpi",
+  "description": "ipps:// (TLS) with HTTP Basic auth, user office / password print-me (overlay on duplex-color-laser-300dpi)",
+  "dnssd_name": "[VIRTUAL] Office IPPS Basic Auth",
+  "dnssd_service_type": "_ipps._tcp",
+  "dnssd_txt": {
+    "pdl": "application/octet-stream,image/pwg-raster",
+    "ty": "Virtual Office IPPS Basic Auth",
+    "product": "(Virtual Office IPPS Basic Auth)",
+    "usb_MFG": "Virtual",
+    "usb_MDL": "Office IPPS Basic Auth",
+    "usb_CMD": "PWGRaster",
+    "Color": "T",
+    "Duplex": "T",
+    "URF": null,
+    "mopria-certified": null,
+    "print_wfds": null,
+    "TLS": "1.2",
+    "air": "username,password"
+  },
+  "set": [
+    {
+      "name": "printer-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Office IPPS Basic Auth"
+      ]
+    },
+    {
+      "name": "printer-info",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Office IPPS Basic Auth"
+      ]
+    },
+    {
+      "name": "printer-dns-sd-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Office IPPS Basic Auth"
+      ]
+    },
+    {
+      "name": "printer-make-and-model",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "Virtual Office IPPS Basic Auth"
+      ]
+    },
+    {
+      "name": "printer-device-id",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "MFG:Virtual;CMD:PWGRaster;MDL:Office IPPS Basic Auth;CLS:PRINTER;"
+      ]
+    }
+  ],
+  "options": {
+    "validation": "strict",
+    "tls": {
+      "mode": "self-signed"
+    },
+    "auth": {
+      "type": "basic",
+      "realm": "Office printer",
+      "users": {
+        "office": "print-me"
+      }
+    }
+  }
+}

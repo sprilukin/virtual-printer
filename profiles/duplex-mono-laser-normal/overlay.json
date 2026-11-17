@@ -1,0 +1,33 @@
+{
+  "base": "brother-dcp-l1630w",
+  "description": "Native auto duplex, mono 600 dpi, sheet-back normal: a client sends one two-sided job (overlay on the Brother capture)",
+  "dnssd_name": "[VIRTUAL] Duplex Mono Laser Normal",
+  "dnssd_txt": {
+    "pdl": "application/octet-stream,image/pwg-raster",
+    "ty": "Virtual Duplex Mono Laser Normal",
+    "product": "(Virtual Duplex Mono Laser Normal)",
+    "usb_MFG": "Virtual",
+    "usb_MDL": "Duplex Mono Laser Normal",
+    "usb_CMD": "PWGRaster",
+    "Duplex": "T",
+    "URF": null,
+    "mopria-certified": null,
+    "print_wfds": null
+  },
+  "remove": [
+    "urf-supported",
+    "printer-icons"
+  ],
+  "set": [
+    {"name": "printer-name", "tag": "nameWithoutLanguage", "values": ["[VIRTUAL] Duplex Mono Laser Normal"]},
+    {"name": "printer-info", "tag": "textWithoutLanguage", "values": ["[VIRTUAL] Duplex Mono Laser Normal"]},
+    {"name": "printer-dns-sd-name", "tag": "nameWithoutLanguage", "values": ["[VIRTUAL] Duplex Mono Laser Normal"]},
+    {"name": "printer-make-and-model", "tag": "textWithoutLanguage", "values": ["Virtual Duplex Mono Laser Normal"]},
+    {"name": "printer-device-id", "tag": "textWithoutLanguage", "values": ["MFG:Virtual;CMD:PWGRaster;MDL:Duplex Mono Laser Normal;CLS:PRINTER;"]},
+    {"name": "document-format-supported", "tag": "mimeMediaType", "values": ["application/octet-stream", "image/pwg-raster"]},
+    {"name": "document-format-preferred", "tag": "mimeMediaType", "values": ["image/pwg-raster"]},
+    {"name": "sides-supported", "tag": "keyword", "values": ["one-sided", "two-sided-long-edge", "two-sided-short-edge"]},
+    {"name": "sides-default", "tag": "keyword", "values": ["one-sided"]},
+    {"name": "pwg-raster-document-sheet-back", "tag": "keyword", "values": ["normal"]}
+  ]
+}

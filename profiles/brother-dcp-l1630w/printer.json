@@ -1,0 +1,3407 @@
+{
+  "format": 1,
+  "name": "brother-dcp-l1630w",
+  "description": "Scrubbed capture of Brother DCP-L1630W",
+  "ipp_version": "2.0",
+  "attributes": [
+    {
+      "name": "copies-default",
+      "tag": "integer",
+      "values": [
+        1
+      ]
+    },
+    {
+      "name": "finishings-default",
+      "tag": "enum",
+      "values": [
+        3
+      ]
+    },
+    {
+      "name": "media-default",
+      "tag": "keyword",
+      "values": [
+        "iso_a4_210x297mm"
+      ]
+    },
+    {
+      "name": "media-col-default",
+      "tag": "collection",
+      "values": [
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        29700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "auto"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "orientation-requested-default",
+      "tag": "enum",
+      "values": [
+        3
+      ]
+    },
+    {
+      "name": "output-bin-default",
+      "tag": "keyword",
+      "values": [
+        "face-down"
+      ]
+    },
+    {
+      "name": "output-mode-default",
+      "tag": "keyword",
+      "values": [
+        "monochrome"
+      ]
+    },
+    {
+      "name": "print-quality-default",
+      "tag": "enum",
+      "values": [
+        4
+      ]
+    },
+    {
+      "name": "printer-resolution-default",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 600,
+          "y": 600,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "sides-default",
+      "tag": "keyword",
+      "values": [
+        "one-sided"
+      ]
+    },
+    {
+      "name": "print-color-mode-default",
+      "tag": "keyword",
+      "values": [
+        "monochrome"
+      ]
+    },
+    {
+      "name": "print-content-optimize-default",
+      "tag": "keyword",
+      "values": [
+        "auto"
+      ]
+    },
+    {
+      "name": "print-scaling-default",
+      "tag": "keyword",
+      "values": [
+        "auto"
+      ]
+    },
+    {
+      "name": "copies-supported",
+      "tag": "rangeOfInteger",
+      "values": [
+        {
+          "lower": 1,
+          "upper": 999
+        }
+      ]
+    },
+    {
+      "name": "finishings-supported",
+      "tag": "enum",
+      "values": [
+        3
+      ]
+    },
+    {
+      "name": "media-supported",
+      "tag": "keyword",
+      "values": [
+        "iso_a4_210x297mm",
+        "na_letter_8.5x11in",
+        "na_legal_8.5x14in",
+        "na_executive_7.25x10.5in",
+        "iso_a5_148x210mm",
+        "iso_b5_176x250mm",
+        "jis_b5_182x257mm",
+        "na_foolscap_8.5x13in",
+        "prc_16k_195x270mm",
+        "custom_min_76.2x127mm",
+        "custom_max_215.9x355.6mm"
+      ]
+    },
+    {
+      "name": "media-col-supported",
+      "tag": "keyword",
+      "values": [
+        "media-type",
+        "media-size",
+        "media-top-margin",
+        "media-left-margin",
+        "media-right-margin",
+        "media-bottom-margin",
+        "media-source",
+        "media-auto-dimension",
+        "media-source-properties"
+      ]
+    },
+    {
+      "name": "orientation-requested-supported",
+      "tag": "enum",
+      "values": [
+        3,
+        4
+      ]
+    },
+    {
+      "name": "output-bin-supported",
+      "tag": "keyword",
+      "values": [
+        "face-down"
+      ]
+    },
+    {
+      "name": "output-mode-supported",
+      "tag": "keyword",
+      "values": [
+        "monochrome",
+        "auto",
+        "auto-monochrome"
+      ]
+    },
+    {
+      "name": "print-quality-supported",
+      "tag": "enum",
+      "values": [
+        4,
+        5,
+        3
+      ]
+    },
+    {
+      "name": "printer-resolution-supported",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 600,
+          "y": 600,
+          "units": "dpi"
+        },
+        {
+          "x": 300,
+          "y": 300,
+          "units": "dpi"
+        },
+        {
+          "x": 1200,
+          "y": 1200,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "sides-supported",
+      "tag": "keyword",
+      "values": [
+        "one-sided"
+      ]
+    },
+    {
+      "name": "print-color-mode-supported",
+      "tag": "keyword",
+      "values": [
+        "monochrome",
+        "auto",
+        "auto-monochrome"
+      ]
+    },
+    {
+      "name": "print-content-optimize-supported",
+      "tag": "keyword",
+      "values": [
+        "auto"
+      ]
+    },
+    {
+      "name": "print-scaling-supported",
+      "tag": "keyword",
+      "values": [
+        "auto",
+        "auto-fit",
+        "fill",
+        "fit",
+        "none"
+      ]
+    },
+    {
+      "name": "generated-natural-language-supported",
+      "tag": "naturalLanguage",
+      "values": [
+        "pl",
+        "bg",
+        "ro",
+        "sk",
+        "sl",
+        "hr",
+        "tr",
+        "id",
+        "en",
+        "fr",
+        "de",
+        "es",
+        "pt",
+        "it",
+        "nl",
+        "no",
+        "sv",
+        "fi",
+        "da",
+        "ru",
+        "cs",
+        "hu",
+        "uk"
+      ]
+    },
+    {
+      "name": "printer-uri-supported",
+      "tag": "uri",
+      "values": [
+        "ipp://vp-brother-dcp-l1630w.local/ipp/print",
+        "ipps://vp-brother-dcp-l1630w.local:443/ipp/print"
+      ]
+    },
+    {
+      "name": "uri-security-supported",
+      "tag": "keyword",
+      "values": [
+        "none",
+        "tls"
+      ]
+    },
+    {
+      "name": "uri-authentication-supported",
+      "tag": "keyword",
+      "values": [
+        "none",
+        "none"
+      ]
+    },
+    {
+      "name": "printer-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Brother DCP-L1630W"
+      ]
+    },
+    {
+      "name": "printer-location",
+      "tag": "textWithoutLanguage",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "name": "printer-info",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Brother DCP-L1630W"
+      ]
+    },
+    {
+      "name": "printer-make-and-model",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "Virtual Brother DCP-L1630W"
+      ]
+    },
+    {
+      "name": "printer-state",
+      "tag": "enum",
+      "values": [
+        3
+      ]
+    },
+    {
+      "name": "printer-state-reasons",
+      "tag": "keyword",
+      "values": [
+        "none"
+      ]
+    },
+    {
+      "name": "ipp-versions-supported",
+      "tag": "keyword",
+      "values": [
+        "1.0",
+        "1.1",
+        "2.0"
+      ]
+    },
+    {
+      "name": "operations-supported",
+      "tag": "enum",
+      "values": [
+        2,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        11,
+        57,
+        59,
+        60
+      ]
+    },
+    {
+      "name": "multiple-document-jobs-supported",
+      "tag": "boolean",
+      "values": [
+        false
+      ]
+    },
+    {
+      "name": "multiple-operation-time-out",
+      "tag": "integer",
+      "values": [
+        150
+      ]
+    },
+    {
+      "name": "natural-language-configured",
+      "tag": "naturalLanguage",
+      "values": [
+        "en"
+      ]
+    },
+    {
+      "name": "charset-configured",
+      "tag": "charset",
+      "values": [
+        "utf-8"
+      ]
+    },
+    {
+      "name": "charset-supported",
+      "tag": "charset",
+      "values": [
+        "utf-8"
+      ]
+    },
+    {
+      "name": "document-format-supported",
+      "tag": "mimeMediaType",
+      "values": [
+        "application/octet-stream",
+        "image/urf",
+        "image/pwg-raster"
+      ]
+    },
+    {
+      "name": "document-format-default",
+      "tag": "mimeMediaType",
+      "values": [
+        "application/octet-stream"
+      ]
+    },
+    {
+      "name": "printer-is-accepting-jobs",
+      "tag": "boolean",
+      "values": [
+        true
+      ]
+    },
+    {
+      "name": "pdl-override-supported",
+      "tag": "keyword",
+      "values": [
+        "attempted"
+      ]
+    },
+    {
+      "name": "compression-supported",
+      "tag": "keyword",
+      "values": [
+        "none",
+        "gzip"
+      ]
+    },
+    {
+      "name": "color-supported",
+      "tag": "boolean",
+      "values": [
+        false
+      ]
+    },
+    {
+      "name": "job-creation-attributes-supported",
+      "tag": "keyword",
+      "values": [
+        "copies",
+        "finishings",
+        "ipp-attribute-fidelity",
+        "job-name",
+        "media",
+        "media-col",
+        "orientation-requested",
+        "output-bin",
+        "output-mode",
+        "print-quality",
+        "printer-resolution",
+        "requesting-user-name",
+        "sides",
+        "print-color-mode",
+        "job-pages-per-set"
+      ]
+    },
+    {
+      "name": "media-bottom-margin-supported",
+      "tag": "integer",
+      "values": [
+        423
+      ]
+    },
+    {
+      "name": "media-left-margin-supported",
+      "tag": "integer",
+      "values": [
+        423
+      ]
+    },
+    {
+      "name": "media-right-margin-supported",
+      "tag": "integer",
+      "values": [
+        423
+      ]
+    },
+    {
+      "name": "media-source-supported",
+      "tag": "keyword",
+      "values": [
+        "auto",
+        "main"
+      ]
+    },
+    {
+      "name": "media-top-margin-supported",
+      "tag": "integer",
+      "values": [
+        423
+      ]
+    },
+    {
+      "name": "media-type-supported",
+      "tag": "keyword",
+      "values": [
+        "stationery",
+        "com.brother-recycled"
+      ]
+    },
+    {
+      "name": "media-size-supported",
+      "tag": "collection",
+      "values": [
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                21000
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                29700
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                21590
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                27940
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                21590
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                35560
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                18415
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                26670
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                14800
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                21000
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                17600
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                25000
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                18200
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                25700
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                21590
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                33020
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "integer",
+              "values": [
+                19500
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "integer",
+              "values": [
+                27000
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "x-dimension",
+              "tag": "rangeOfInteger",
+              "values": [
+                {
+                  "lower": 7620,
+                  "upper": 21590
+                }
+              ]
+            },
+            {
+              "name": "y-dimension",
+              "tag": "rangeOfInteger",
+              "values": [
+                {
+                  "lower": 12700,
+                  "upper": 35560
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "pages-per-minute",
+      "tag": "integer",
+      "values": [
+        30
+      ]
+    },
+    {
+      "name": "printer-device-id",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "MFG:Brother;CMD:PJL,HBP,URF;MDL:DCP-L1630W;CLS:PRINTER;CID:Brother Laser Type1;URF:W8,CP1,IS1,MT1-3-4-5-8,OB10,PQ3-4-5,RS300-600-1200,V1.5;"
+      ]
+    },
+    {
+      "name": "printer-icons",
+      "tag": "uri",
+      "values": [
+        "http://vp-brother-dcp-l1630w.local/icons/device-icons-128.png",
+        "http://vp-brother-dcp-l1630w.local/icons/device-icons-512.png"
+      ]
+    },
+    {
+      "name": "printer-more-info",
+      "tag": "uri",
+      "values": [
+        "http://vp-brother-dcp-l1630w.local/net/net/airprint.html"
+      ]
+    },
+    {
+      "name": "printer-uuid",
+      "tag": "uri",
+      "values": [
+        "urn:uuid:6729d17d-6588-5013-9ef4-d3ccfa721612"
+      ]
+    },
+    {
+      "name": "job-impressions-supported",
+      "tag": "rangeOfInteger",
+      "values": [
+        {
+          "lower": 1,
+          "upper": 999
+        }
+      ]
+    },
+    {
+      "name": "printer-geo-location",
+      "tag": "unknown",
+      "values": []
+    },
+    {
+      "name": "printer-supply-info-uri",
+      "tag": "uri",
+      "values": [
+        "http://vp-brother-dcp-l1630w.local/home/status.html"
+      ]
+    },
+    {
+      "name": "media-ready",
+      "tag": "keyword",
+      "values": [
+        "iso_a4_210x297mm"
+      ]
+    },
+    {
+      "name": "media-col-ready",
+      "tag": "collection",
+      "values": [
+        {
+          "members": [
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        29700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "identify-actions-default",
+      "tag": "keyword",
+      "values": [
+        "flash"
+      ]
+    },
+    {
+      "name": "identify-actions-supported",
+      "tag": "keyword",
+      "values": [
+        "flash"
+      ]
+    },
+    {
+      "name": "ipp-features-supported",
+      "tag": "keyword",
+      "values": [
+        "airprint-2.1"
+      ]
+    },
+    {
+      "name": "printer-input-tray",
+      "tag": "octetString",
+      "values": [
+        {
+          "base64": "dHlwZT1vdGhlcjttZWRpYWZlZWQ9Mjk2OTI2O21lZGlheGZlZWQ9MjA5OTczO21heGNhcGFjaXR5PTI1MDtsZXZlbD0tMztzdGF0dXM9MDtuYW1lPUFVVE87aW5kZXg9MTtkaW11bml0PW1pY3JvbWV0ZXJzO3VuaXQ9c2hlZXRzO21lZGlhbmFtZT1USElOO21lZGlhd2VpZ2h0PS0yO21lZGlhdHlwZT1zdGF0aW9uZXJ5LWxpZ2h0d2VpZ2h0O21lZGlhY29sb3I9VW5rbm93bjs="
+        },
+        {
+          "base64": "dHlwZT1zaGVldEZlZWRBdXRvTm9uUmVtb3ZhYmxlVHJheTttZWRpYWZlZWQ9Mjk2OTI2O21lZGlheGZlZWQ9MjA5OTczO21heGNhcGFjaXR5PTI1MDtsZXZlbD0tMztzdGF0dXM9MDtuYW1lPVRSQVkxO2luZGV4PTI7ZGltdW5pdD1taWNyb21ldGVyczt1bml0PXNoZWV0czttZWRpYW5hbWU9UkVHVUxBUjttZWRpYXdlaWdodD0tMjttZWRpYXR5cGU9c3RhdGlvbmVyeTttZWRpYWNvbG9yPVVua25vd247"
+        }
+      ]
+    },
+    {
+      "name": "printer-output-tray",
+      "tag": "octetString",
+      "values": [
+        {
+          "base64": "dHlwZT11blJlbW92YWJsZUJpbjttYXhjYXBhY2l0eT01MDtyZW1haW5pbmc9LTI7c3RhdHVzPTA7bmFtZT1mYWNlLWRvd247aW5kZXg9MTt1bml0PXNoZWV0cztzdGFja2luZ29yZGVyPWZpcnN0VG9MYXN0O3BhZ2VkZWxpdmVyeT1mYWNlRG93bjtvZmZzZXRzdGFja2luZz1ub3RQcmVzZW50Ow=="
+        }
+      ]
+    },
+    {
+      "name": "document-format-varying-attributes",
+      "tag": "keyword",
+      "values": [
+        "copies"
+      ]
+    },
+    {
+      "name": "multiple-operation-time-out-action",
+      "tag": "keyword",
+      "values": [
+        "abort-job"
+      ]
+    },
+    {
+      "name": "printer-organization",
+      "tag": "textWithoutLanguage",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "name": "printer-organizational-unit",
+      "tag": "textWithoutLanguage",
+      "values": [
+        ""
+      ]
+    },
+    {
+      "name": "printer-get-attributes-supported",
+      "tag": "keyword",
+      "values": [
+        "document-format"
+      ]
+    },
+    {
+      "name": "which-jobs-supported",
+      "tag": "keyword",
+      "values": [
+        "completed",
+        "not-completed"
+      ]
+    },
+    {
+      "name": "printer-strings-languages-supported",
+      "tag": "naturalLanguage",
+      "values": [
+        "pl",
+        "ro",
+        "sk",
+        "hr",
+        "tr",
+        "id",
+        "en",
+        "fr",
+        "de",
+        "es",
+        "pt",
+        "it",
+        "nl",
+        "nb",
+        "sv",
+        "fi",
+        "da",
+        "ru",
+        "cs",
+        "hu"
+      ]
+    },
+    {
+      "name": "printer-strings-uri",
+      "tag": "uri",
+      "values": [
+        "http://vp-brother-dcp-l1630w.local/ipp/strings/dict/en.txt"
+      ]
+    },
+    {
+      "name": "printer-mandatory-job-attributes",
+      "tag": "keyword",
+      "values": [
+        "attributes-charset",
+        "attributes-natural-language",
+        "printer-uri"
+      ]
+    },
+    {
+      "name": "marker-colors",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "#000000"
+      ]
+    },
+    {
+      "name": "marker-high-levels",
+      "tag": "integer",
+      "values": [
+        100
+      ]
+    },
+    {
+      "name": "marker-levels",
+      "tag": "integer",
+      "values": [
+        100
+      ]
+    },
+    {
+      "name": "marker-low-levels",
+      "tag": "integer",
+      "values": [
+        11
+      ]
+    },
+    {
+      "name": "marker-names",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "BK"
+      ]
+    },
+    {
+      "name": "marker-types",
+      "tag": "keyword",
+      "values": [
+        "toner"
+      ]
+    },
+    {
+      "name": "pdf-versions-supported",
+      "tag": "keyword",
+      "values": [
+        "none"
+      ]
+    },
+    {
+      "name": "printer-dns-sd-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Brother DCP-L1630W"
+      ]
+    },
+    {
+      "name": "printer-kind",
+      "tag": "keyword",
+      "values": [
+        "document",
+        "envelope",
+        "label",
+        "postcard"
+      ]
+    },
+    {
+      "name": "job-pages-per-set-supported",
+      "tag": "boolean",
+      "values": [
+        true
+      ]
+    },
+    {
+      "name": "job-ids-supported",
+      "tag": "boolean",
+      "values": [
+        true
+      ]
+    },
+    {
+      "name": "requesting-user-uri-supported",
+      "tag": "boolean",
+      "values": [
+        false
+      ]
+    },
+    {
+      "name": "landscape-orientation-requested-preferred",
+      "tag": "enum",
+      "values": [
+        4
+      ]
+    },
+    {
+      "name": "printer-firmware-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "MAIN"
+      ]
+    },
+    {
+      "name": "printer-firmware-string-version",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "1.14:0FFD"
+      ]
+    },
+    {
+      "name": "printer-firmware-version",
+      "tag": "octetString",
+      "values": [
+        {
+          "base64": "MS4xNDowRkZE"
+        }
+      ]
+    },
+    {
+      "name": "urf-supported",
+      "tag": "keyword",
+      "values": [
+        "W8",
+        "CP1",
+        "IS1",
+        "MT1-3-4-5-8",
+        "OB10",
+        "PQ3-4-5",
+        "RS300-600-1200",
+        "V1.5"
+      ]
+    },
+    {
+      "name": "document-format-preferred",
+      "tag": "mimeMediaType",
+      "values": [
+        "image/urf"
+      ]
+    },
+    {
+      "name": "mopria-certified",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "2.2"
+      ]
+    },
+    {
+      "name": "pwg-raster-document-resolution-supported",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 600,
+          "y": 600,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "pwg-raster-document-sheet-back",
+      "tag": "keyword",
+      "values": [
+        "normal"
+      ]
+    },
+    {
+      "name": "pwg-raster-document-type-supported",
+      "tag": "keyword",
+      "values": [
+        "sgray_8"
+      ]
+    },
+    {
+      "name": "media-col-database",
+      "tag": "collection",
+      "values": [
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        29700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        27940
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        35560
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        18415
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        26670
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        14800
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        17600
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        25000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        18200
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        25700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        33020
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        14800
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "long-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        5
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "stationery"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        19500
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        27000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        29700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        27940
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        35560
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        18415
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        26670
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        14800
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        17600
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        25000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        18200
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        25700
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21590
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        33020
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        14800
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        21000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "long-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        5
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "members": [
+            {
+              "name": "media-type",
+              "tag": "keyword",
+              "values": [
+                "com.brother-recycled"
+              ]
+            },
+            {
+              "name": "media-size",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "x-dimension",
+                      "tag": "integer",
+                      "values": [
+                        19500
+                      ]
+                    },
+                    {
+                      "name": "y-dimension",
+                      "tag": "integer",
+                      "values": [
+                        27000
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "media-bottom-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-left-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-right-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-top-margin",
+              "tag": "integer",
+              "values": [
+                423
+              ]
+            },
+            {
+              "name": "media-source",
+              "tag": "keyword",
+              "values": [
+                "main"
+              ]
+            },
+            {
+              "name": "media-auto-dimension",
+              "tag": "boolean",
+              "values": [
+                false
+              ]
+            },
+            {
+              "name": "media-source-properties",
+              "tag": "collection",
+              "values": [
+                {
+                  "members": [
+                    {
+                      "name": "media-source-feed-direction",
+                      "tag": "keyword",
+                      "values": [
+                        "short-edge-first"
+                      ]
+                    },
+                    {
+                      "name": "media-source-feed-orientation",
+                      "tag": "enum",
+                      "values": [
+                        3
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "dnssd": {
+    "service_type": "_ipp._tcp",
+    "service_name": "[VIRTUAL] Brother DCP-L1630W",
+    "txt": [
+      [
+        "txtvers",
+        "1"
+      ],
+      [
+        "qtotal",
+        "1"
+      ],
+      [
+        "pdl",
+        "application/octet-stream,image/urf,image/pwg-raster"
+      ],
+      [
+        "rp",
+        "ipp/print"
+      ],
+      [
+        "note",
+        ""
+      ],
+      [
+        "ty",
+        "Virtual Brother DCP-L1630W"
+      ],
+      [
+        "product",
+        "(Virtual Brother DCP-L1630W)"
+      ],
+      [
+        "adminurl",
+        "http://vp-brother-dcp-l1630w.local./net/net/airprint.html"
+      ],
+      [
+        "priority",
+        "25"
+      ],
+      [
+        "usb_MFG",
+        "Brother"
+      ],
+      [
+        "usb_MDL",
+        "DCP-L1630W"
+      ],
+      [
+        "usb_CMD",
+        "PJL,HBP,URF"
+      ],
+      [
+        "Color",
+        "F"
+      ],
+      [
+        "Copies",
+        "T"
+      ],
+      [
+        "Duplex",
+        "F"
+      ],
+      [
+        "Fax",
+        "F"
+      ],
+      [
+        "Scan",
+        "T"
+      ],
+      [
+        "PaperCustom",
+        "T"
+      ],
+      [
+        "Binary",
+        "T"
+      ],
+      [
+        "Transparent",
+        "T"
+      ],
+      [
+        "TBCP",
+        "F"
+      ],
+      [
+        "URF",
+        "W8,CP1,IS1,MT1-3-4-5-8,OB10,PQ3-4-5,RS300-600-1200,V1.5"
+      ],
+      [
+        "kind",
+        "document,envelope,label,postcard"
+      ],
+      [
+        "PaperMax",
+        "legal-A4"
+      ],
+      [
+        "TLS",
+        "1.3"
+      ],
+      [
+        "UUID",
+        "6729d17d-6588-5013-9ef4-d3ccfa721612"
+      ],
+      [
+        "print_wfds",
+        "T"
+      ],
+      [
+        "mopria-certified",
+        "2.2"
+      ]
+    ]
+  },
+  "options": {
+    "validation": "strict"
+  }
+}
