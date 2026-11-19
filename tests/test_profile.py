@@ -82,3 +82,15 @@ def test_parse_dnssd_text():
     assert d["port"] == 631
     assert dict(map(tuple, d["txt"]))["product"] == "(Brother DCP)"
     assert dict(map(tuple, d["txt"]))["ty"] == "Brother DCP-L1630W"
+
+
+def test_fixed_state_option_validation(base):
+    ok = copy.deepcopy(base)
+    ok["options"].update({"state_reasons": ["toner-low-report"], "printer_state": "stopped"})
+    validate(ok)
+    bad = copy.deepcopy(base)
+    bad["options"].update({"state_reasons": "toner-low-report", "printer_state": "idle"})
+    with pytest.raises(ProfileError) as exc:
+        validate(bad)
+    assert "state_reasons must be a list" in str(exc.value)
+    assert "printer_state must be 'stopped'" in str(exc.value)

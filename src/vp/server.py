@@ -100,7 +100,7 @@ class Printer:
         self.attrs = {a["name"]: a for a in profile["attributes"]}
         self.started = time.time()
         self.accepting = True
-        self.state_reasons = ["none"]
+        self.state_reasons = self._base_reasons()
         self.faults = faults.FaultSet(profile.get("options", {}).get("faults"))
         self.connections: set[asyncio.Task[Any]] = set()
         self._wake = asyncio.Event()  # set when faults change or a job is cancelled
@@ -149,7 +149,7 @@ class Printer:
         self.faults.reset()
         self.store.reset()
         self.accepting = True
-        self.state_reasons = ["none"]
+        self.state_reasons = self._base_reasons()
         self.auth_failures = 0
         self._notify()
 
@@ -163,9 +163,16 @@ class Printer:
         base = [r for r in self.state_reasons if r != "none"]
         return [*extra, *base] or ["none"]
 
+    def _base_reasons(self) -> list[str]:
+        """`options.state_reasons`: reasons the profile always reports (default: none)."""
+        return list(self.profile.get("options", {}).get("state_reasons") or ["none"])
+
     @property
     def printer_state(self) -> int:
-        if self.faults.blocking():
+        if (
+            self.faults.blocking()
+            or self.profile.get("options", {}).get("printer_state") == "stopped"
+        ):
             return STOPPED
         busy = any(j.state == jobs.PROCESSING for j in self.store.jobs.values())
         return PROCESSING_STATE if busy else IDLE
