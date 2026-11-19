@@ -286,7 +286,13 @@ def validate(profile: dict[str, Any]) -> None:
             faults.validate_list(profile["options"]["faults"])
         except faults.FaultError as exc:
             errors.append(str(exc))
-    errors.extend(_validate_security(profile.get("options", {})))
+    opts = profile.get("options", {})
+    reasons = opts.get("state_reasons", [])
+    if not isinstance(reasons, list) or not all(isinstance(r, str) for r in reasons):
+        errors.append("options.state_reasons must be a list of keywords")
+    if opts.get("printer_state", "stopped") != "stopped":
+        errors.append("options.printer_state must be 'stopped' when present")
+    errors.extend(_validate_security(opts))
     if errors:
         raise ProfileError(
             f"profile {profile.get('name', '?')!r} invalid:\n  " + "\n  ".join(errors)

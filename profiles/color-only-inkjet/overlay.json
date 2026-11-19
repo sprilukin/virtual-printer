@@ -1,0 +1,242 @@
+{
+  "base": "brother-dcp-l1630w",
+  "description": "Colour raster only, no grayscale and no monochrome mode (overlay on the Brother capture)",
+  "dnssd_name": "[VIRTUAL] Color Only Inkjet",
+  "dnssd_txt": {
+    "pdl": "application/octet-stream,image/pwg-raster",
+    "ty": "Virtual Color Only Inkjet",
+    "product": "(Virtual Color Only Inkjet)",
+    "usb_MFG": "Virtual",
+    "usb_MDL": "Color Only Inkjet",
+    "usb_CMD": "PWGRaster",
+    "Color": "T",
+    "Duplex": "T",
+    "URF": null,
+    "mopria-certified": null,
+    "print_wfds": null
+  },
+  "remove": [
+    "urf-supported",
+    "printer-icons"
+  ],
+  "set": [
+    {
+      "name": "printer-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Color Only Inkjet"
+      ]
+    },
+    {
+      "name": "printer-info",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Color Only Inkjet"
+      ]
+    },
+    {
+      "name": "printer-dns-sd-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] Color Only Inkjet"
+      ]
+    },
+    {
+      "name": "printer-make-and-model",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "Virtual Color Only Inkjet"
+      ]
+    },
+    {
+      "name": "printer-device-id",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "MFG:Virtual;CMD:PWGRaster;MDL:Color Only Inkjet;CLS:PRINTER;"
+      ]
+    },
+    {
+      "name": "document-format-supported",
+      "tag": "mimeMediaType",
+      "values": [
+        "application/octet-stream",
+        "image/pwg-raster"
+      ]
+    },
+    {
+      "name": "document-format-preferred",
+      "tag": "mimeMediaType",
+      "values": [
+        "image/pwg-raster"
+      ]
+    },
+    {
+      "name": "sides-supported",
+      "tag": "keyword",
+      "values": [
+        "one-sided",
+        "two-sided-long-edge",
+        "two-sided-short-edge"
+      ]
+    },
+    {
+      "name": "color-supported",
+      "tag": "boolean",
+      "values": [
+        true
+      ]
+    },
+    {
+      "name": "pages-per-minute",
+      "tag": "integer",
+      "values": [
+        24
+      ]
+    },
+    {
+      "name": "pages-per-minute-color",
+      "tag": "integer",
+      "values": [
+        24
+      ]
+    },
+    {
+      "name": "printer-resolution-supported",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 300,
+          "y": 300,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "printer-resolution-default",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 300,
+          "y": 300,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "pwg-raster-document-resolution-supported",
+      "tag": "resolution",
+      "values": [
+        {
+          "x": 300,
+          "y": 300,
+          "units": "dpi"
+        }
+      ]
+    },
+    {
+      "name": "pwg-raster-document-sheet-back",
+      "tag": "keyword",
+      "values": [
+        "flipped"
+      ]
+    },
+    {
+      "name": "marker-colors",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "#000000",
+        "#00FFFF",
+        "#FF00FF",
+        "#FFFF00"
+      ]
+    },
+    {
+      "name": "marker-names",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "Black",
+        "Cyan",
+        "Magenta",
+        "Yellow"
+      ]
+    },
+    {
+      "name": "marker-levels",
+      "tag": "integer",
+      "values": [
+        80,
+        80,
+        80,
+        80
+      ]
+    },
+    {
+      "name": "marker-high-levels",
+      "tag": "integer",
+      "values": [
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "name": "marker-low-levels",
+      "tag": "integer",
+      "values": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "name": "marker-types",
+      "tag": "keyword",
+      "values": [
+        "toner",
+        "toner",
+        "toner",
+        "toner"
+      ]
+    },
+    {
+      "name": "pwg-raster-document-type-supported",
+      "tag": "keyword",
+      "values": [
+        "srgb_8"
+      ]
+    },
+    {
+      "name": "print-color-mode-supported",
+      "tag": "keyword",
+      "values": [
+        "color"
+      ]
+    },
+    {
+      "name": "output-mode-supported",
+      "tag": "keyword",
+      "values": [
+        "color"
+      ]
+    },
+    {
+      "name": "print-color-mode-default",
+      "tag": "keyword",
+      "values": [
+        "color"
+      ]
+    },
+    {
+      "name": "output-mode-default",
+      "tag": "keyword",
+      "values": [
+        "color"
+      ]
+    }
+  ],
+  "options": {
+    "validation": "strict"
+  }
+}

@@ -49,6 +49,10 @@ curl -s localhost:7310/jobs/1 | jq .receipt.sides
 curl -s localhost:7310/jobs/1/pages/1.png -o page1.png
 ```
 
+## Fixed state
+
+`options.state_reasons` (a list of keywords, e.g. `["toner-low-report"]`) is reported on every request; `options.printer_state: "stopped"` reports `printer-state=stopped` without any reason. Shipped overlays using them: `toner-low-only`, `stopped-no-reason`. The overlays `unsupported-no-raster`, `unsupported-150dpi` and `color-only-inkjet` change only capabilities.
+
 ## Faults
 
 Startup faults go in the profile (or an overlay's `options`): `"options": {"faults": [{"type": "busy", "params": {"count": 1}}]}`. Request-level faults accept `count`: they fire that many times, then switch themselves off. Without it they stay on until cleared.

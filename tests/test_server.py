@@ -274,3 +274,22 @@ def test_http_chunked_upload_with_expect(tmp_path):
         assert p.store.get(1).state == jobs.COMPLETED
 
     run(with_printer("brother-dcp-l1630w", go, tmp_path))
+
+
+def test_fixed_state_overlays(tmp_path):
+    async def reasons_and_state(p):
+        a = names(await ipp_call(p, "Get-Printer-Attributes"))
+        return a["printer-state-reasons"]["values"], a["printer-state"]["values"]
+
+    async def toner(p):
+        assert await reasons_and_state(p) == (["toner-low-report"], [3])
+        p.reset()
+        assert await reasons_and_state(p) == (["toner-low-report"], [3])
+
+    async def stopped(p):
+        assert await reasons_and_state(p) == (["none"], [5])
+        p.reset()
+        assert await reasons_and_state(p) == (["none"], [5])
+
+    run(with_printer("toner-low-only", toner, tmp_path))
+    run(with_printer("stopped-no-reason", stopped, tmp_path))
