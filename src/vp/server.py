@@ -16,6 +16,8 @@ import copy
 import hmac
 import ssl
 import time
+from collections.abc import Callable
+from contextvars import ContextVar
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -79,6 +81,10 @@ def _date_time(ts: float) -> dict[str, Any]:
     return {"hex": raw.hex()}
 
 
+# Per-request facts for the request log; each connection runs in its own task/context.
+_REQ: ContextVar[dict[str, Any] | None] = ContextVar("vp_request", default=None)
+
+
 class Printer:
     def __init__(
         self,
@@ -87,7 +93,11 @@ class Printer:
         host: str = "127.0.0.1",
         port: int = 0,
         ssl_context: ssl.SSLContext | None = None,
+        request_log: Callable[[str], None] | None = None,
+        verbose: bool = False,
     ):
+        self.verbose = verbose  # also log request headers and IPP attributes (needs request_log)
+        self.request_log = request_log  # one line per HTTP request; None = silent
         self.profile = profile
         self.ssl_context = ssl_context
         self.scheme = "ipps" if ssl_context else "ipp"
@@ -207,6 +217,14 @@ class Printer:
         except ValueError:
             await self._http(writer, 400, close=True)
             return False
+        peer = writer.get_extra_info("peername")
+        info: dict[str, Any] = {
+            "peer": f"{peer[0]}:{peer[1]}" if peer else "?",
+            "method": method,
+            "target": target,
+            "t": time.monotonic(),
+        }
+        _REQ.set(info)
         headers: dict[str, str] = {}
         while True:
             h = (await reader.readline()).decode("latin-1").strip()
@@ -214,6 +232,7 @@ class Printer:
                 break
             k, _, v = h.partition(":")
             headers[k.strip().lower()] = v.strip()
+        info["headers"] = headers
         close = headers.get("connection", "").lower() == "close"
         path = target.split("?", 1)[0]
         try:
@@ -240,12 +259,74 @@ class Printer:
                 await writer.drain()
             body = await self._read_body(reader, writer, headers)
             host = headers.get("host") or f"{self.host}:{self.port}"
+            info["in"] = len(body)
+            info["ipp"] = self._ipp_summary(body, None)
             response = await self.handle_ipp(body, host)
+            info["ipp"] = self._ipp_summary(body, response)
+            info["body"], info["response"] = body, response
             await self._http(writer, 200, response, "application/ipp", close)
         except HttpError as exc:
             await self._http(writer, exc.status, close=True)
             return False
+        except (asyncio.IncompleteReadError, ConnectionError, asyncio.LimitOverrunError):
+            self._log("dropped")
+            raise
         return not close
+
+    @staticmethod
+    def _ipp_summary(body: bytes, response: bytes | None) -> str:
+        """`Print-Job req=3 -> successful-ok` for the request log (best effort)."""
+        try:
+            req, _ = ipp.decode_message(body)
+        except ipp.IppError:
+            return "malformed-ipp"
+        text = f"{OP_BY_CODE.get(req['code'], hex(req['code']))} req={req['request_id']}"
+        if response is not None and len(response) >= 4:
+            text += f" -> {ipp.status_name(int.from_bytes(response[2:4], 'big'))}"
+        return text
+
+    def _log(self, outcome: str) -> None:
+        info = _REQ.get()
+        if self.request_log is None or info is None:
+            return
+        ms = (time.monotonic() - info["t"]) * 1000
+        parts = [
+            datetime.now().strftime("%H:%M:%S.%f")[:-3],
+            self.name,
+            info["peer"],
+            info["method"],
+            info["target"],
+        ]
+        if info.get("ipp"):
+            parts.append(info["ipp"])
+        parts.append(f"{outcome} {ms:.0f}ms")
+        self.request_log(" ".join(parts))
+        if self.verbose:
+            for line in self._verbose_lines(info):
+                self.request_log("    " + line)
+
+    @staticmethod
+    def _verbose_lines(info: dict[str, Any]) -> list[str]:
+        """Request headers plus the attributes of the IPP request and response."""
+        lines = [f"{k}: {v}" for k, v in info.get("headers", {}).items() if k != "authorization"]
+        if "authorization" in info.get("headers", {}):
+            lines.append("authorization: <redacted>")
+        for label, key in (("request", "body"), ("response", "response")):
+            if key not in info:
+                continue
+            try:
+                msg, document = ipp.decode_message(info[key])
+            except ipp.IppError:
+                continue
+            lines.append(f"-- IPP {label} v{msg['version']} id={msg['request_id']}")
+            for group in msg["groups"]:
+                lines.append(f"[{group['tag']}]")
+                for a in group["attributes"]:
+                    text = f"{a['name']} = {a['values']!r}"
+                    lines.append("  " + (text if len(text) <= 200 else text[:197] + "..."))
+            if len(document):
+                lines.append(f"  (+ {len(document)} bytes of document data)")
+        return lines
 
     def _is_resource(self, path: str) -> bool:
         p = path.rstrip("/")
@@ -262,6 +343,7 @@ class Printer:
     ) -> bool:
         """Request-level faults. True when the connection was dealt with (answered or dropped)."""
         if (p := self.faults.fire(faults.OFFLINE)) is not None:
+            self._log("fault offline (no answer)")
             await self._hold(reader, p.get("seconds"), drain=True)
             return True
         if method == "POST" and self.faults.fire(faults.UNAUTHORIZED) is not None:
@@ -366,6 +448,7 @@ class Printer:
         )
         writer.write(head.encode() + body)
         await writer.drain()
+        self._log(f"HTTP {status}")
 
     # ------------------------------------------------------------ IPP
 

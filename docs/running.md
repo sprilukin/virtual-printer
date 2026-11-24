@@ -32,6 +32,8 @@ Only PWG raster is decoded. Other document formats (URF, PDF) are stored as `doc
 
 ## Control API
 
+Every HTTP request is logged to stdout, one line each (time, profile, client, request line, IPP operation and result, HTTP status, duration); `--quiet` turns it off; `--verbose` adds the request headers (credentials redacted) and every attribute of the IPP request and response, each value cut at 200 characters. Connections dropped by faults are logged too.
+
 Each printer gets an HTTP+JSON control port, printed at startup: `--control-base-port` (default 7310, one per profile, same order as the printers). It has no authentication, so it listens on `127.0.0.1` unless you pass `--control-bind`; `--no-control` turns it off.
 
 | Request | Does |
