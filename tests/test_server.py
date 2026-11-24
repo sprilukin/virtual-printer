@@ -293,3 +293,80 @@ def test_fixed_state_overlays(tmp_path):
 
     run(with_printer("toner-low-only", toner, tmp_path))
     run(with_printer("stopped-no-reason", stopped, tmp_path))
+
+
+# --- epson-et3950-inferred: an INFERRED profile (not recorded from a real printer) ---
+
+
+def _http(p, method, path, body=None, headers=None):
+    import http.client
+
+    c = http.client.HTTPConnection("127.0.0.1", p.port, timeout=5)
+    try:
+        c.request(method, path, body=body, headers=headers or {})
+        r = c.getresponse()
+        return r.status, dict(r.getheaders()), r.read()
+    finally:
+        c.close()
+
+
+def test_epson_inferred_404_everywhere_but_ipp(tmp_path):
+    async def go(p):
+        assert p.resource == "/ipp"
+        for method in ("GET", "POST"):
+            for path in ("/ipp/print", "/", "/other"):
+                body = b"x" if method == "POST" else None
+                st, h, data = await asyncio.to_thread(
+                    _http, p, method, path, body, {"Content-Type": "application/ipp"}
+                )
+                assert st == 404, (method, path)
+                assert h["Server"] == "EPSON_Linux UPnP/1.0"
+                assert h["Content-Type"] == "text/html"
+                assert data == b""
+
+    run(with_printer("epson-et3950-inferred", go, tmp_path))
+
+
+def test_epson_inferred_ipp_attributes(tmp_path):
+    async def go(p):
+        r = await ipp_call(p, "Get-Printer-Attributes")
+        assert status(r) == "successful-ok"
+        a = names(r)
+        assert a["printer-make-and-model"]["values"] == ["EPSON ET-3950 Series"]
+        assert a["printer-name"]["values"][0].startswith("[VIRTUAL] ")
+        assert "inferred, not recorded" in a["printer-name"]["values"][0]
+        assert a["printer-uuid"]["values"][0].startswith("urn:uuid:")
+        assert {"image/pwg-raster", "image/urf", "application/pdf"} <= set(
+            a["document-format-supported"]["values"]
+        )
+        assert {"x": 300, "y": 300, "units": "dpi"} in a[
+            "pwg-raster-document-resolution-supported"
+        ]["values"]
+        assert "srgb_8" in a["pwg-raster-document-type-supported"]["values"]
+        assert {"iso_a4_210x297mm", "na_letter_8.5x11in"} <= set(a["media-supported"]["values"])
+        assert "one-sided" in a["sides-supported"]["values"]
+        assert a["printer-state"]["values"] == [3]
+        assert a["printer-uri-supported"]["values"] == [f"ipp://127.0.0.1:{p.port}/ipp"]
+
+    run(with_printer("epson-et3950-inferred", go, tmp_path))
+
+
+def test_epson_inferred_uuid_is_stable_and_labelled():
+    a = profile.load("epson-et3950-inferred", PROFILES)
+    b = profile.load("epson-et3950-inferred", PROFILES)
+    ids = [x["values"] for x in a["attributes"] if x["name"] == "printer-uuid"]
+    assert ids == [x["values"] for x in b["attributes"] if x["name"] == "printer-uuid"]
+    assert "INFERRED, NOT RECORDED" in a["description"]
+
+
+def test_real_model_name_is_opt_in():
+    import pytest
+
+    prof = profile.load("duplex-color-laser-300dpi", PROFILES)
+    for x in prof["attributes"]:
+        if x["name"] == "printer-make-and-model":
+            x["values"] = ["EPSON ET-3950 Series"]
+    with pytest.raises(profile.ProfileError, match="printer-make-and-model"):
+        profile.validate(prof)
+    prof["options"]["real_model_name"] = True
+    profile.validate(prof)

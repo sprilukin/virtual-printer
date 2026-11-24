@@ -260,7 +260,8 @@ def validate(profile: dict[str, Any]) -> None:
         if not text.startswith(VIRTUAL_PREFIX):
             errors.append(f"printer-name must start with {VIRTUAL_PREFIX.strip()!r}")
     mm = attrs.get("printer-make-and-model")
-    if mm and mm["values"]:
+    # an inferred profile may name the model it imitates; its printer-name keeps [VIRTUAL]
+    if mm and mm["values"] and not profile.get("options", {}).get("real_model_name"):
         v = mm["values"][0]
         text = v["value"] if isinstance(v, dict) else v
         if not text.startswith(VIRTUAL_MODEL_PREFIX):
@@ -292,6 +293,11 @@ def validate(profile: dict[str, Any]) -> None:
         errors.append("options.state_reasons must be a list of keywords")
     if opts.get("printer_state", "stopped") != "stopped":
         errors.append("options.printer_state must be 'stopped' when present")
+    nf = opts.get("not_found")
+    if nf is not None and not (
+        isinstance(nf, dict) and all(isinstance(v, str) for v in nf.values())
+    ):
+        errors.append("options.not_found must be an object with string 'server'/'content_type'")
     errors.extend(_validate_security(opts))
     if errors:
         raise ProfileError(

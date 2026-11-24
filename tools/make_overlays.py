@@ -67,6 +67,7 @@ def devid(t):
 T3 = "Office IPPS Basic Auth"
 T1 = "Duplex Color Laser 300dpi"
 T2 = "Borderless Inkjet Letter"
+T4 = "EPSON ET-3950 (inferred, not recorded)"
 OVERLAYS = {
     "duplex-color-laser-300dpi": {
         "base": "brother-dcp-l1630w",
@@ -143,6 +144,48 @@ OVERLAYS = {
             "tls": {"mode": "self-signed"},
             "auth": {"type": "basic", "realm": "Office printer", "users": {"office": "print-me"}},
         },
+    },
+}
+OVERLAYS["epson-et3950-inferred"] = {
+    "base": "duplex-color-laser-300dpi",
+    "description": (
+        "INFERRED, NOT RECORDED: a guess at how an Epson ET-3950 might behave, not captured "
+        "from a real device. Answers HTTP 404 on every path except /ipp (overlay on "
+        "duplex-color-laser-300dpi)"
+    ),
+    "dnssd_name": f"[VIRTUAL] {T4}",
+    "dnssd_txt": {
+        **txt(T4, "T", "T"),
+        "pdl": "application/octet-stream,image/pwg-raster,image/urf,application/pdf",
+        "rp": "ipp",
+        "ty": "EPSON ET-3950 Series (inferred, not recorded)",
+        "product": "(EPSON ET-3950 Series)",
+        "usb_MFG": "EPSON",
+        "usb_MDL": "ET-3950 Series",
+    },
+    "set": [
+        A("printer-name", "nameWithoutLanguage", f"[VIRTUAL] {T4}"),
+        A("printer-info", "textWithoutLanguage", f"[VIRTUAL] {T4}"),
+        A("printer-dns-sd-name", "nameWithoutLanguage", f"[VIRTUAL] {T4}"),
+        A("printer-make-and-model", "textWithoutLanguage", "EPSON ET-3950 Series"),
+        A(
+            "printer-device-id",
+            "textWithoutLanguage",
+            "MFG:EPSON;CMD:PWGRaster;MDL:ET-3950 Series;CLS:PRINTER;",
+        ),
+        A(
+            "document-format-supported",
+            "mimeMediaType",
+            "application/octet-stream",
+            "image/pwg-raster",
+            "image/urf",
+            "application/pdf",
+        ),
+    ],
+    "options": {
+        "validation": "strict",
+        "real_model_name": True,
+        "not_found": {"server": "EPSON_Linux UPnP/1.0", "content_type": "text/html"},
     },
 }
 
