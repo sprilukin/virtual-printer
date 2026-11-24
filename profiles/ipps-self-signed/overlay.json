@@ -1,0 +1,63 @@
+{
+  "base": "duplex-color-laser-300dpi",
+  "description": "ipps:// (TLS 1.2+) with a self-signed certificate and no auth, to test trust on first use (overlay on duplex-color-laser-300dpi)",
+  "dnssd_name": "[VIRTUAL] IPPS Self-Signed",
+  "dnssd_service_type": "_ipps._tcp",
+  "dnssd_txt": {
+    "pdl": "application/octet-stream,image/pwg-raster",
+    "ty": "Virtual IPPS Self-Signed",
+    "product": "(Virtual IPPS Self-Signed)",
+    "usb_MFG": "Virtual",
+    "usb_MDL": "IPPS Self-Signed",
+    "usb_CMD": "PWGRaster",
+    "Color": "T",
+    "Duplex": "T",
+    "URF": null,
+    "mopria-certified": null,
+    "print_wfds": null,
+    "TLS": "1.2"
+  },
+  "set": [
+    {
+      "name": "printer-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] IPPS Self-Signed"
+      ]
+    },
+    {
+      "name": "printer-info",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "[VIRTUAL] IPPS Self-Signed"
+      ]
+    },
+    {
+      "name": "printer-dns-sd-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] IPPS Self-Signed"
+      ]
+    },
+    {
+      "name": "printer-make-and-model",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "Virtual IPPS Self-Signed"
+      ]
+    },
+    {
+      "name": "printer-device-id",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "MFG:Virtual;CMD:PWGRaster;MDL:IPPS Self-Signed;CLS:PRINTER;"
+      ]
+    }
+  ],
+  "options": {
+    "validation": "strict",
+    "tls": {
+      "mode": "self-signed"
+    }
+  }
+}
