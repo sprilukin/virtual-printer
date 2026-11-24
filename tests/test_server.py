@@ -370,3 +370,27 @@ def test_real_model_name_is_opt_in():
         profile.validate(prof)
     prof["options"]["real_model_name"] = True
     profile.validate(prof)
+
+
+def test_request_log_lines(tmp_path):
+    lines: list[str] = []
+
+    async def go():
+        prof = profile.load("brother-dcp-l1630w", PROFILES)
+        p = Printer(prof, tmp_path / "spool", request_log=lines.append)
+        await p.start()
+        try:
+            await ipp_call(p, "Get-Printer-Attributes")
+            reader, writer = await asyncio.open_connection(p.host, p.port)
+            writer.write(b"GET /nope HTTP/1.1\r\nConnection: close\r\n\r\n")
+            await writer.drain()
+            await reader.read()
+            writer.close()
+        finally:
+            await p.stop()
+
+    run(go())
+    assert any(
+        "POST /ipp/print Get-Printer-Attributes" in x and "successful-ok" in x for x in lines
+    )
+    assert any("GET /nope" in x and "HTTP 404" in x for x in lines)

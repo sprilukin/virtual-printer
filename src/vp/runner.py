@@ -82,7 +82,16 @@ def run_up(a: argparse.Namespace, root: Path) -> int:
         except (OSError, ValueError) as exc:
             print(f"FAILED: TLS setup for {name}: {exc}")
             return 1
-        printers.append(Printer(profile, spool / name, a.bind, a.base_port + i, ctx))
+        printers.append(
+            Printer(
+                profile,
+                spool / name,
+                a.bind,
+                a.base_port + i,
+                ctx,
+                None if a.quiet else lambda line: print(line, flush=True),
+            )
+        )
     controls = (
         []
         if a.no_control
