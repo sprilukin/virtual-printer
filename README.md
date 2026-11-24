@@ -57,6 +57,7 @@ curl -s localhost:7310/jobs/1                                                   
 | `duplex-color-laser-300dpi` | overlay | auto duplex, colour, 300 dpi |
 | `duplex-mono-laser-normal` | overlay | native duplex on a mono laser |
 | `borderless-inkjet-letter` | overlay | small margins, Letter default |
+| `epson-et3950-inferred` | overlay, **inferred, not recorded** | a guess at an Epson ET-3950, not captured from a real device: HTTP 404 on every path except `/ipp`, colour inkjet, `image/pwg-raster`, `image/urf`, `application/pdf` |
 | `ipps-auth-office` | overlay | `ipps://` with TLS and HTTP Basic auth (test user `office`, password `print-me`) |
 
 Profiles live in `profiles/<name>/` as a `printer.json` (a full capture) or an `overlay.json` (changes on top of a base). To add one from a real printer, see [docs/collecting-profiles.md](docs/collecting-profiles.md).

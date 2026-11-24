@@ -51,7 +51,7 @@ curl -s localhost:7310/jobs/1/pages/1.png -o page1.png
 
 ## Fixed state
 
-`options.state_reasons` (a list of keywords, e.g. `["toner-low-report"]`) is reported on every request; `options.printer_state: "stopped"` reports `printer-state=stopped` without any reason. Shipped overlays using them: `toner-low-only`, `stopped-no-reason`. The overlays `unsupported-no-raster`, `unsupported-150dpi` and `color-only-inkjet` change only capabilities.
+`options.not_found` (`{"server": "...", "content_type": "text/html"}`) makes every path except the profile's IPP resource (`rp` in `dnssd_txt`) answer an empty HTTP 404 with those headers; `options.real_model_name: true` lets `printer-make-and-model` skip the `Virtual ` prefix (`printer-name` still needs `[VIRTUAL]`). Shipped example: `epson-et3950-inferred`, an inferred profile, not recorded from a real printer. `options.state_reasons` (a list of keywords, e.g. `["toner-low-report"]`) is reported on every request; `options.printer_state: "stopped"` reports `printer-state=stopped` without any reason. Shipped overlays using them: `toner-low-only`, `stopped-no-reason`. The overlays `unsupported-no-raster`, `unsupported-150dpi` and `color-only-inkjet` change only capabilities.
 
 ## Faults
 

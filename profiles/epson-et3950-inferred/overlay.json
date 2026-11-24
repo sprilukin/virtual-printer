@@ -1,0 +1,74 @@
+{
+  "base": "duplex-color-laser-300dpi",
+  "description": "INFERRED, NOT RECORDED: a guess at how an Epson ET-3950 might behave, not captured from a real device. Answers HTTP 404 on every path except /ipp (overlay on duplex-color-laser-300dpi)",
+  "dnssd_name": "[VIRTUAL] EPSON ET-3950 (inferred, not recorded)",
+  "dnssd_txt": {
+    "pdl": "application/octet-stream,image/pwg-raster,image/urf,application/pdf",
+    "ty": "EPSON ET-3950 Series (inferred, not recorded)",
+    "product": "(EPSON ET-3950 Series)",
+    "usb_MFG": "EPSON",
+    "usb_MDL": "ET-3950 Series",
+    "usb_CMD": "PWGRaster",
+    "Color": "T",
+    "Duplex": "T",
+    "URF": null,
+    "mopria-certified": null,
+    "print_wfds": null,
+    "rp": "ipp"
+  },
+  "set": [
+    {
+      "name": "printer-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] EPSON ET-3950 (inferred, not recorded)"
+      ]
+    },
+    {
+      "name": "printer-info",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "[VIRTUAL] EPSON ET-3950 (inferred, not recorded)"
+      ]
+    },
+    {
+      "name": "printer-dns-sd-name",
+      "tag": "nameWithoutLanguage",
+      "values": [
+        "[VIRTUAL] EPSON ET-3950 (inferred, not recorded)"
+      ]
+    },
+    {
+      "name": "printer-make-and-model",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "EPSON ET-3950 Series"
+      ]
+    },
+    {
+      "name": "printer-device-id",
+      "tag": "textWithoutLanguage",
+      "values": [
+        "MFG:EPSON;CMD:PWGRaster;MDL:ET-3950 Series;CLS:PRINTER;"
+      ]
+    },
+    {
+      "name": "document-format-supported",
+      "tag": "mimeMediaType",
+      "values": [
+        "application/octet-stream",
+        "image/pwg-raster",
+        "image/urf",
+        "application/pdf"
+      ]
+    }
+  ],
+  "options": {
+    "validation": "strict",
+    "real_model_name": true,
+    "not_found": {
+      "server": "EPSON_Linux UPnP/1.0",
+      "content_type": "text/html"
+    }
+  }
+}

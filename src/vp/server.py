@@ -109,6 +109,9 @@ class Printer:
         txt = dict(profile.get("dnssd", {}).get("txt", []))
         self.resource = "/" + txt.get("rp", "ipp/print").strip("/")
         self._fake_hosts = self._find_fake_hosts()
+        # `options.not_found`: answer 404 for every path but the IPP resource, like printers
+        # that only serve /ipp; also drops the "bare /" convenience route.
+        self.not_found: dict[str, Any] | None = profile.get("options", {}).get("not_found")
 
     # ------------------------------------------------------------ lifecycle
 
@@ -220,18 +223,14 @@ class Printer:
                 self.auth_failures += 1
                 await self._challenge(writer)
                 return False
+            if not self._is_resource(path):
+                close = close or method == "POST"  # the request body is left unread
+                await self._not_found(writer, close)
+                return not close
             if method != "POST":
                 body = (f"{self.profile['name']}: virtual IPP printer\n").encode()
-                await self._http(
-                    writer,
-                    200 if path.rstrip("/") in ("", self.resource) else 404,
-                    body,
-                    "text/plain",
-                    close,
-                )
+                await self._http(writer, 200, body, "text/plain", close)
                 return not close
-            if path.rstrip("/") not in ("", self.resource):
-                raise HttpError(404)  # noqa: TRY301 - caught below to build the response
             if headers.get("content-type", "").split(";")[0].strip() != "application/ipp":
                 raise HttpError(  # noqa: TRY301 - caught below to build the response
                     400, "content-type must be application/ipp"
@@ -247,6 +246,16 @@ class Printer:
             await self._http(writer, exc.status, close=True)
             return False
         return not close
+
+    def _is_resource(self, path: str) -> bool:
+        p = path.rstrip("/")
+        return p == self.resource or (p == "" and self.not_found is None)
+
+    async def _not_found(self, writer: asyncio.StreamWriter, close: bool) -> None:
+        """HTTP 404 with no IPP body; `options.not_found` picks the Server and Content-Type."""
+        nf = self.not_found or {}
+        extra = f"Server: {nf['server']}\r\n" if nf.get("server") else ""
+        await self._http(writer, 404, b"", nf.get("content_type", "text/plain"), close, extra)
 
     async def _request_fault(
         self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter, method: str
