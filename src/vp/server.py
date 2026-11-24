@@ -94,7 +94,9 @@ class Printer:
         port: int = 0,
         ssl_context: ssl.SSLContext | None = None,
         request_log: Callable[[str], None] | None = None,
+        verbose: bool = False,
     ):
+        self.verbose = verbose  # also log request headers and IPP attributes (needs request_log)
         self.request_log = request_log  # one line per HTTP request; None = silent
         self.profile = profile
         self.ssl_context = ssl_context
@@ -230,6 +232,7 @@ class Printer:
                 break
             k, _, v = h.partition(":")
             headers[k.strip().lower()] = v.strip()
+        info["headers"] = headers
         close = headers.get("connection", "").lower() == "close"
         path = target.split("?", 1)[0]
         try:
@@ -260,6 +263,7 @@ class Printer:
             info["ipp"] = self._ipp_summary(body, None)
             response = await self.handle_ipp(body, host)
             info["ipp"] = self._ipp_summary(body, response)
+            info["body"], info["response"] = body, response
             await self._http(writer, 200, response, "application/ipp", close)
         except HttpError as exc:
             await self._http(writer, exc.status, close=True)
@@ -297,6 +301,32 @@ class Printer:
             parts.append(info["ipp"])
         parts.append(f"{outcome} {ms:.0f}ms")
         self.request_log(" ".join(parts))
+        if self.verbose:
+            for line in self._verbose_lines(info):
+                self.request_log("    " + line)
+
+    @staticmethod
+    def _verbose_lines(info: dict[str, Any]) -> list[str]:
+        """Request headers plus the attributes of the IPP request and response."""
+        lines = [f"{k}: {v}" for k, v in info.get("headers", {}).items() if k != "authorization"]
+        if "authorization" in info.get("headers", {}):
+            lines.append("authorization: <redacted>")
+        for label, key in (("request", "body"), ("response", "response")):
+            if key not in info:
+                continue
+            try:
+                msg, document = ipp.decode_message(info[key])
+            except ipp.IppError:
+                continue
+            lines.append(f"-- IPP {label} v{msg['version']} id={msg['request_id']}")
+            for group in msg["groups"]:
+                lines.append(f"[{group['tag']}]")
+                for a in group["attributes"]:
+                    text = f"{a['name']} = {a['values']!r}"
+                    lines.append("  " + (text if len(text) <= 200 else text[:197] + "..."))
+            if len(document):
+                lines.append(f"  (+ {len(document)} bytes of document data)")
+        return lines
 
     def _is_resource(self, path: str) -> bool:
         p = path.rstrip("/")

@@ -160,6 +160,11 @@ def main(argv: list[str] | None = None) -> int:
         help="extra DNS name or IP the server certificate must cover (repeatable)",
     )
     c.add_argument("--quiet", action="store_true", help="do not log each request")
+    c.add_argument(
+        "--verbose",
+        action="store_true",
+        help="also log request headers and the attributes of each IPP request and response",
+    )
     c.add_argument("--no-control", action="store_true", help="do not start the control API")
     c.add_argument("--no-mdns", action="store_true", help="do not advertise over mDNS")
     c.add_argument("--lenient", action="store_true", help="accept jobs with unadvertised values")

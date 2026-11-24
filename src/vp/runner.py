@@ -90,6 +90,7 @@ def run_up(a: argparse.Namespace, root: Path) -> int:
                 a.base_port + i,
                 ctx,
                 None if a.quiet else lambda line: print(line, flush=True),
+                a.verbose,
             )
         )
     controls = (
